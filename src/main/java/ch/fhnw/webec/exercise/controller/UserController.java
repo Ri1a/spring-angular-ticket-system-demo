@@ -18,14 +18,14 @@ public class UserController {
 
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     public String index(Model model) {
-        model.addAttribute("title", "User");
+        model.addAttribute("name", "User");
 
         return "user";
     }
 
     @RequestMapping(path = "/users/{id}", method = RequestMethod.GET)
     public String showBook(@PathVariable int id, Model model) {
-        model.addAttribute("book", this.userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
+        model.addAttribute("user", this.userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
 
         return "user/show";
     }

@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @RequestMapping(path = "/users/{id}", method = RequestMethod.GET)
-    public String showBook(@PathVariable int id, Model model) {
+    public String showUser(@PathVariable int id, Model model) {
         model.addAttribute("user", this.userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
 
         return "user/show";

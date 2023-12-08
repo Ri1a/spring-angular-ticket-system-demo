@@ -41,7 +41,7 @@ public class UserController {
     // save user
     @PostMapping(value = "/api/saveUser")
     public User saveUser(@RequestBody User user){
-        user.setUserId(UUID.randomUUID().toString());
+        //user.setUserId(UUID.randomUUID().toString());
         return userRepository.save(user);
     }
 

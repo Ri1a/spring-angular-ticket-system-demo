@@ -38,7 +38,7 @@ public class TicketController {
     public Tickets saveTicket(@RequestBody Tickets ticket){
         Date date = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
         ticket.setCreationDate(date);
-        ticket.setTicketId(UUID.randomUUID().toString());
+        //ticket.setTicketId(UUID.randomUUID().toString());
         return ticketRepository.save(ticket);
     }
 

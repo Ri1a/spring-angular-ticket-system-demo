@@ -1,7 +1,9 @@
 package ch.fhnw.webec.exercise.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
@@ -10,12 +12,14 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "\"user\"")
 public class User {
     @Id
-    @GeneratedValue(generator="system-uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @GenericGenerator(name="system-uuid")
     private String userId;
 
     private String username;
+
     private String password;
+
     private String role;
 
     public String getUserId() {

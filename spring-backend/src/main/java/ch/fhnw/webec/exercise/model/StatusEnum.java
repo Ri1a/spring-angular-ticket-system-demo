@@ -1,6 +1,6 @@
 package ch.fhnw.webec.exercise.model;
 
-public enum Status {
+public enum StatusEnum {
     OPEN,
     INPROGRESS,
     REVIEW,

@@ -16,21 +16,21 @@ public class Tickets {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid")
-    private String ticket_id;
+    private String ticketId;
 
     private String title;
     private String description;
-    private Date creation_date;
+    private Date creationDate;
 
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 
-    public String getTicket_id() {
-        return ticket_id;
+    public String getTicketId() {
+        return ticketId;
     }
 
-    public void setTicket_id(String ticket_id) {
-        this.ticket_id = ticket_id;
+    public void setTicketId(String ticketId) {
+        this.ticketId = ticketId;
     }
 
     public String getTitle() {
@@ -49,12 +49,12 @@ public class Tickets {
         this.description = description;
     }
 
-    public Date getCreation_date() {
-        return creation_date;
+    public Date getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreation_date(Date creation_date) {
-        this.creation_date = creation_date;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public StatusEnum getStatus() {

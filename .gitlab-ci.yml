@@ -2,7 +2,7 @@ image: gradle:8.4-jdk21-alpine
 variables:
     GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 before_script:
-    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - export GRADLE_USER_HOME=`pwd`/spring-backend/.gradle
 build:
     stage: build
     script: gradle --build-cache assemble

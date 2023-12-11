@@ -12,12 +12,10 @@ import org.hibernate.annotations.GenericGenerator;
 import java.util.Date;
 
 @Entity
-@Table(name = "\"tickets\"")
 public class Tickets {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @GenericGenerator(name="system-uuid")
-    private String ticketId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private String title;
 
@@ -27,12 +25,12 @@ public class Tickets {
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 
-    public String getTicketId() {
-        return ticketId;
+    public int getTicketId() {
+        return id;
     }
 
     public void setTicketId(String ticketId) {
-        this.ticketId = ticketId;
+        this.id = id;
     }
 
     public String getTitle() {

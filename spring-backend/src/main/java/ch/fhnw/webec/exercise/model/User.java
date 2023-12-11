@@ -11,10 +11,16 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "\"user\"")
 public class User {
+    public User() {}
+    public User(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @GenericGenerator(name="system-uuid")
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private String username;
 
@@ -22,12 +28,12 @@ public class User {
 
     private String role;
 
-    public String getUserId() {
-        return userId;
+    public int getUserId() {
+        return id;
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.id = id;
     }
 
     public String getUsername() {

@@ -29,7 +29,7 @@ public class UserController {
     // all users
     @RequestMapping(value = "/api/user/getAllUser", method = RequestMethod.GET)
     public List<User> getAllUser() {
-        return userRepository.getAllUser();
+        return userRepository.findAll();
     }
 
     // delete user

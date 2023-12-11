@@ -44,10 +44,10 @@ public class TicketController {
 
     // update ticket status
     @PostMapping(value = "/api/updateTicketStatus/{ticketId}/{status}")
-    public Tickets updateTicketStatus(@PathVariable String ticketId, @PathVariable StatusEnum status){
+    public Tickets updateTicketStatus(@PathVariable int id, @PathVariable StatusEnum status){
         List<Tickets> list = ticketRepository.findAll();
         for(Tickets ticket: list) {
-            if(ticket.getTicketId().equals(ticketId)) {
+            if(ticket.getTicketId() == id) {
                 ticket.setStatus(status);
                 ticketRepository.save(ticket);
             }

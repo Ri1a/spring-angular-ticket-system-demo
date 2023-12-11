@@ -30,13 +30,13 @@ public class UserRepositoryIntegrationTest {
     public void testSaveUser() {
         var user = new User("Testuser", "password111", "admin");
 
-        assertEquals(1, this.userRepository.findAll().size());
+        assertEquals(3, this.userRepository.findAll().size());
 
         var savedUser = this.userRepository.save(user);
 
         assertEquals(4, this.userRepository.findAll().size());
         assertEquals("Testuser", savedUser.getUsername());
-        assertEquals("password1111", savedUser.getPassword());
+        assertEquals("password111", savedUser.getPassword());
         assertEquals("admin", savedUser.getRole());
     }
 

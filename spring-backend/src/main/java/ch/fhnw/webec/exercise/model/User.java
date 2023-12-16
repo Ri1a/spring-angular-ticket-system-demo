@@ -19,8 +19,8 @@ public class User {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String id;
 
     private String username;
 
@@ -28,7 +28,7 @@ public class User {
 
     private String role;
 
-    public int getUserId() {
+    public String getUserId() {
         return id;
     }
 

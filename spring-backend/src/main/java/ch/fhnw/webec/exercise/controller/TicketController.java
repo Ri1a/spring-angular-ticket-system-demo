@@ -47,7 +47,7 @@ public class TicketController {
     public Tickets updateTicketStatus(@PathVariable int id, @PathVariable StatusEnum status){
         List<Tickets> list = ticketRepository.findAll();
         for(Tickets ticket: list) {
-            if(ticket.getTicketId() == id) {
+            if(ticket.getTicketId().equals(id)) {
                 ticket.setStatus(status);
                 ticketRepository.save(ticket);
             }

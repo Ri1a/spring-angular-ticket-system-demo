@@ -14,8 +14,8 @@ import java.util.Date;
 @Entity
 public class Tickets {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String id;
 
     private String title;
 
@@ -25,7 +25,7 @@ public class Tickets {
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 
-    public int getTicketId() {
+    public String getTicketId() {
         return id;
     }
 

@@ -1,0 +1,40 @@
+<button class="close" mat-button (click)="onDialogClose()">X</button>
+<h1 mat-dialog-title>Create new ticket</h1>
+
+<mat-dialog-content>
+  <p>
+    <mat-form-field class="enterTitleBox">
+      <mat-label>Title</mat-label>
+      <input #titleInput [(ngModel)]="ticket.title" matInput placeholder="Enter title">
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field class="enterDescriptionBox" appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea #descriptionInput [(ngModel)]="ticket.description" matInput></textarea>
+    </mat-form-field>
+  </p>
+
+  <div>
+    <mat-form-field class="chooseStatusDropDown" appearance="fill">
+      <mat-label>Status</mat-label>
+      <mat-select #statusInput [(ngModel)]="ticket.status">
+        <mat-option *ngFor="let status of statusArrayList" [value]="status">
+          {{status}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+
+
+</mat-dialog-content>
+
+<mat-card-actions align="end">
+  <button class="saveButton" mat-raised-button (click)="onDialogSave(titleInput.value, descriptionInput.value, statusInput.value)">Save</button>
+  <button class="closeButton" mat-raised-button (click)="onDialogClose()">Close</button>
+</mat-card-actions>
+
+
+

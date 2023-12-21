@@ -1,21 +1,80 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AppComponent} from './app.component';
+import {NewTicketComponent} from './component/ticket/overview/new-ticket/new-ticket.component';
+
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {OverviewComponent} from './component/ticket/overview/overview/overview.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+import {MatSliderModule} from '@angular/material/slider';
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatCardModule} from "@angular/material/card";
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatDatepicker, MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule, MatOptionModule} from "@angular/material/core";
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
+import {MatButtonModule} from "@angular/material/button";
+import {FormsModule} from "@angular/forms";
+import { LogInComponent } from './component/log-in/log-in.component';
+import {RouterModule} from "@angular/router";
+import {AppRoutingModule} from "./app-routing.module";
+import { SettingsComponent } from './component/settings/settings.component';
+import { NewUserComponent } from './component/new-user/new-user.component';
+import {BasicAuthInterceptorService} from "./services/basic-auth-interceptor.service";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NewTicketComponent,
+    OverviewComponent,
+    LogInComponent,
+    SettingsComponent,
+    NewUserComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
+    MatGridListModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatMenuModule,
+    MatCardModule,
+    MatDialogModule,
+    DragDropModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatButtonModule,
+    FormsModule,
+    RouterModule.forRoot([]),
+    AppRoutingModule
   ],
-  providers: [
-    provideClientHydration()
+  providers: [{
+    provide: MatDialogRef,
+    useValue: {}
+  },{
+    provide: MatDatepicker,
+    useValue: {}
+  },
+    {
+      // token interceptor
+      provide: HTTP_INTERCEPTORS,
+      useClass:BasicAuthInterceptorService,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,6 @@
 package ch.fhnw.webec.exercise.model;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +31,7 @@ public class User implements UserDetails {
     private String username;
 
     @NotEmpty
+    @Length(min = 6)
     @Column(nullable = false)
     private String password;
 
@@ -37,7 +39,7 @@ public class User implements UserDetails {
     private Set<String> authorities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Comment> comments;
+    private List<Ticket> tickets;
 
     public User() {}
 
@@ -87,6 +89,18 @@ public class User implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ch.fhnw.webec.exercise.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Date;
 import java.util.List;
@@ -11,8 +12,12 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
+    @NotEmpty
+    @Column(nullable = false, unique = true)
     private String title;
 
+    @NotEmpty
+    @Column(nullable = false, unique = true)
     private String description;
     private Date creationDate;
 
@@ -21,6 +26,9 @@ public class Ticket {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ticket")
     private List<Comment> comments;
+
+    @ManyToOne
+    private User user;
 
     public String getTicketId() {
         return id;
@@ -60,5 +68,13 @@ public class Ticket {
 
     public void setStatus(StatusEnum status) {
         this.status = status;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

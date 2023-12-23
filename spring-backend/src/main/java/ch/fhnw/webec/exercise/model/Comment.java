@@ -10,7 +10,7 @@ public class Comment {
     private String id;
 
     @NotEmpty
-    @Column(nullable = false, unique = true, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String text;
 
     @ManyToOne

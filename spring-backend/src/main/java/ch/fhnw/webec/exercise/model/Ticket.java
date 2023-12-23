@@ -1,18 +1,12 @@
 package ch.fhnw.webec.exercise.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
-public class Tickets {
+public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
@@ -24,6 +18,9 @@ public class Tickets {
 
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ticket")
+    private List<Comment> comments;
 
     public String getTicketId() {
         return id;

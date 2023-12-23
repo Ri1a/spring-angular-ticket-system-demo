@@ -1,7 +1,7 @@
 package ch.fhnw.webec.exercise.controller;
 
 import ch.fhnw.webec.exercise.model.StatusEnum;
-import ch.fhnw.webec.exercise.model.Tickets;
+import ch.fhnw.webec.exercise.model.Ticket;
 import ch.fhnw.webec.exercise.repository.TicketRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -29,13 +28,13 @@ public class TicketController {
 
     // list all tickets
     @RequestMapping(value = "/api/tickets", method = RequestMethod.GET, produces = "application/json")
-    public List<Tickets> listAll() {
+    public List<Ticket> listAll() {
         return ticketRepository.findAll();
     }
 
     // save ticket
     @PostMapping(value = "/api/add")
-    public Tickets saveTicket(@RequestBody Tickets ticket){
+    public Ticket saveTicket(@RequestBody Ticket ticket){
         Date date = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
         ticket.setCreationDate(date);
         //ticket.setTicketId(UUID.randomUUID().toString());
@@ -44,9 +43,9 @@ public class TicketController {
 
     // update ticket status
     @PostMapping(value = "/api/updateTicketStatus/{ticketId}/{status}")
-    public Tickets updateTicketStatus(@PathVariable int id, @PathVariable StatusEnum status){
-        List<Tickets> list = ticketRepository.findAll();
-        for(Tickets ticket: list) {
+    public Ticket updateTicketStatus(@PathVariable int id, @PathVariable StatusEnum status){
+        List<Ticket> list = ticketRepository.findAll();
+        for(Ticket ticket: list) {
             if(ticket.getTicketId().equals(id)) {
                 ticket.setStatus(status);
                 ticketRepository.save(ticket);
@@ -57,7 +56,7 @@ public class TicketController {
 
     // update ticket
     @PostMapping(value = "/api/updateTicket")
-    public Tickets updateTicket(@RequestBody Tickets ticket){
+    public Ticket updateTicket(@RequestBody Ticket ticket){
         Date date = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
         ticket.setCreationDate(date);
         return ticketRepository.save(ticket);

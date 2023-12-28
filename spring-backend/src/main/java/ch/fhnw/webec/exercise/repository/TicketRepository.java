@@ -1,7 +1,7 @@
 package ch.fhnw.webec.exercise.repository;
 
-import ch.fhnw.webec.exercise.model.Tickets;
+import ch.fhnw.webec.exercise.model.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TicketRepository extends JpaRepository<Tickets, String> {
+public interface TicketRepository extends JpaRepository<Ticket, String> {
 }

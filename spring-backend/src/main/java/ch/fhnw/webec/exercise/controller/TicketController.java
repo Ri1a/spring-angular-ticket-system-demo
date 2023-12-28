@@ -3,13 +3,10 @@ package ch.fhnw.webec.exercise.controller;
 import ch.fhnw.webec.exercise.model.StatusEnum;
 import ch.fhnw.webec.exercise.model.Ticket;
 import ch.fhnw.webec.exercise.repository.TicketRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -18,53 +15,54 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@RequestMapping("/tickets")
 public class TicketController {
 
     private final TicketRepository ticketRepository;
 
-    TicketController(TicketRepository ticketRepository) {
+    public TicketController(TicketRepository ticketRepository) {
         this.ticketRepository = ticketRepository;
     }
 
-    // list all tickets
-    @RequestMapping(value = "/api/tickets", method = RequestMethod.GET, produces = "application/json")
-    public List<Ticket> listAll() {
+    @GetMapping
+    public List<Ticket> getAllTickets() {
         return ticketRepository.findAll();
     }
 
-    // save ticket
-    @PostMapping(value = "/api/add")
-    public Ticket saveTicket(@RequestBody Ticket ticket){
-        Date date = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        ticket.setCreationDate(date);
-        //ticket.setTicketId(UUID.randomUUID().toString());
+    @GetMapping("/{id}")
+    public Ticket showTicket(@PathVariable String id) {
+        return ticketRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping("/add")
+    public Ticket addTicket(@Valid @RequestBody Ticket ticket) {
+        ticket.setCreationDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         return ticketRepository.save(ticket);
     }
 
-    // update ticket status
-    @PostMapping(value = "/api/updateTicketStatus/{ticketId}/{status}")
-    public Ticket updateTicketStatus(@PathVariable int id, @PathVariable StatusEnum status){
-        List<Ticket> list = ticketRepository.findAll();
-        for(Ticket ticket: list) {
-            if(ticket.getTicketId().equals(id)) {
-                ticket.setStatus(status);
-                ticketRepository.save(ticket);
-            }
+    @PutMapping("/{id}/update")
+    public Ticket updateTicket(@PathVariable String id, @Valid @RequestBody Ticket ticket) {
+        if (!ticketRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return null;
-    }
-
-    // update ticket
-    @PostMapping(value = "/api/updateTicket")
-    public Ticket updateTicket(@RequestBody Ticket ticket){
-        Date date = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        ticket.setCreationDate(date);
+        ticket.setCreationDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         return ticketRepository.save(ticket);
     }
 
-    // delete ticket
-    @PostMapping(value = "/api/delete/{ticketId}")
-    public void deleteTicket(@PathVariable("ticketId") String ticketId){
-        ticketRepository.deleteById(ticketId);
+    @DeleteMapping("/{id}/delete")
+    public void deleteTicket(@PathVariable String id) {
+        if (!ticketRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        ticketRepository.deleteById(id);
+    }
+
+    @PutMapping("/{id}/status")
+    public Ticket updateTicketStatus(@PathVariable String id, @RequestBody StatusEnum status) {
+        Ticket ticket = ticketRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        ticket.setStatus(status);
+        return ticketRepository.save(ticket);
     }
 }

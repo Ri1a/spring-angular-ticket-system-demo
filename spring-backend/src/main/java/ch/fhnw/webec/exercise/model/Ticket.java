@@ -1,38 +1,41 @@
 package ch.fhnw.webec.exercise.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "\"tickets\"")
-public class Tickets {
+public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @GenericGenerator(name="system-uuid")
-    private String ticketId;
+    private String id;
 
+    @NotEmpty
+    @Column(nullable = false, unique = true)
     private String title;
 
+    @NotEmpty
+    @Column(nullable = false, unique = true)
     private String description;
     private Date creationDate;
 
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ticket")
+    private List<Comment> comments;
+
+    @ManyToOne
+    private User user;
+
     public String getTicketId() {
-        return ticketId;
+        return id;
     }
 
     public void setTicketId(String ticketId) {
-        this.ticketId = ticketId;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -65,5 +68,13 @@ public class Tickets {
 
     public void setStatus(StatusEnum status) {
         this.status = status;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

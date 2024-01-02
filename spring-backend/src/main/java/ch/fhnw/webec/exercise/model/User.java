@@ -1,52 +1,109 @@
 package ch.fhnw.webec.exercise.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "\"user\"")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @GenericGenerator(name="system-uuid")
-    private String userId;
+public class User implements UserDetails {
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Id
+    private String id;
+
+    @NotEmpty
+    @Column(nullable = false, unique = true)
     private String username;
 
+    @NotEmpty
+    @Length(min = 6)
+    @Column(nullable = false)
     private String password;
 
-    private String role;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> authorities;
 
-    public String getUserId() {
-        return userId;
-    }
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Ticket> tickets;
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+    public User() {}
 
-    public String getUsername() {
-        return username;
+    public User(String username, String password, Set<String> authorities) {
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
+    public void setAuthorities(Set<String> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities.stream().map(SimpleGrantedAuthority::new).toList();
+    }
+
+    public String get() {
+        return this.id;
+    }
+
+    @Override
     public String getPassword() {
-        return password;
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getRole() { return role; }
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
 
-    public void setRole(String role) { this.role = role; }
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

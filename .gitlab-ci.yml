@@ -5,7 +5,9 @@ before_script:
     - export GRADLE_USER_HOME=`pwd`/spring-backend/.gradle
 build:
     stage: build
-    script: gradle --build-cache assemble
+    script:
+        - cd spring-backend/
+        - gradle --build-cache assemble
     cache:
         key: "$CI_COMMIT_REF_NAME"
         policy: push
@@ -14,7 +16,9 @@ build:
             - .gradle
 test:
     stage: test
-    script: gradle check
+    script:
+        - cd spring-backend/
+        - gradle check
     cache:
         key: "$CI_COMMIT_REF_NAME"
         policy: pull

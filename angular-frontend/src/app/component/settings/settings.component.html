@@ -1,0 +1,42 @@
+<h1 class = "title">Settings</h1>
+
+<h2 class="addNewUserText">Add new user
+  <button class="addNewUserButton" mat-mini-fab color="primary" (click)="openDialogNewUser()">
+    <mat-icon>add</mat-icon>
+  </button>
+</h2>
+
+<h2 class="titlerole">Admin User</h2>
+
+<div *ngFor="let user of userRoleAdmin">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{user.username}}</mat-card-title>
+      <mat-card-subtitle>{{user.password}}</mat-card-subtitle>
+      <mat-card-subtitle>{{user.role}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions align="end">
+      <button mat-button (click)="openDialogEdit(user)"><mat-icon>edit</mat-icon></button>
+      <button class="deleteButton" (click)="deleteUser(user.user_id)" mat-stroked-button><mat-icon>delete</mat-icon></button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<h2 class="titlerole2">Normal User</h2>
+
+<div *ngFor="let user of userRoleNormal">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{user.username}}</mat-card-title>
+      <mat-card-subtitle>{{user.password}}</mat-card-subtitle>
+      <mat-card-subtitle>{{user.role}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions align="end">
+      <button mat-button (click)="openDialogEdit(user)"><mat-icon>edit</mat-icon></button>
+      <button class="deleteButton" (click)="deleteUser(user.user_id)" mat-stroked-button><mat-icon>delete</mat-icon></button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+

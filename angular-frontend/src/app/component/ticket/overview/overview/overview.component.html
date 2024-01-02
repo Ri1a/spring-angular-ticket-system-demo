@@ -1,0 +1,77 @@
+<h1 class="title">Ticket Overview</h1>
+
+<div class="dragndropcontainer">
+
+  <h2 class="addNewTicketText">Add new ticket
+    <button class="addNewTicketButton" mat-mini-fab color="primary" (click)="openDialogNewTicket()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </h2>
+  <div cdkDropListGroup>
+    <div class="example-container">
+      <h2>Open</h2>
+      <div cdkDropList
+           id="OPEN"
+           [cdkDropListData]="ticketListOpen"
+           class="example-list"
+           (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let ticket of ticketListOpen" cdkDrag (cdkDragStarted)="getCurrentTicket(ticket.ticket_id)">
+          {{ticket.title}}
+          {{ticket.user}}
+          <button mat-button (click)="openDialogPopUp(ticket)"><mat-icon>edit</mat-icon></button>
+          <button class="deleteButton" mat-stroked-button (click)="deleteTicket(ticket.ticket_id)"><mat-icon>delete</mat-icon></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-container">
+      <h2>In Progress</h2>
+      <div cdkDropList
+           id="INPROGRESS"
+           [cdkDropListData]="ticketListProcess"
+           class="example-list"
+           (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let ticket of ticketListProcess" cdkDrag (cdkDragStarted)="getCurrentTicket(ticket.ticket_id)">
+          {{ticket.title}}
+          <button mat-button (click)="openDialogPopUp(ticket)"><mat-icon>edit</mat-icon></button>
+          <button class="deleteButton" mat-stroked-button (click)="deleteTicket(ticket.ticket_id)"><mat-icon>delete</mat-icon></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-container">
+      <h2>Review</h2>
+      <div cdkDropList
+           id="REVIEW"
+           [cdkDropListData]="ticketListReview"
+           class="example-list"
+           (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let ticket of ticketListReview" cdkDrag (cdkDragStarted)="getCurrentTicket(ticket.ticket_id)">
+          {{ticket.title}}
+          <button mat-button (click)="openDialogPopUp(ticket)"><mat-icon>edit</mat-icon></button>
+          <button class="deleteButton" mat-stroked-button (click)="deleteTicket(ticket.ticket_id)"><mat-icon>delete</mat-icon></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-container">
+      <h2>Done</h2>
+      <div cdkDropList
+           id="DONE"
+           [cdkDropListData]="ticketListDone"
+           class="example-list"
+           (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let ticket of ticketListDone" cdkDrag (cdkDragStarted)="getCurrentTicket(ticket.ticket_id)">
+          {{ticket.title}}
+          <button mat-button (click)="openDialogPopUp(ticket)"><mat-icon>edit</mat-icon></button>
+          <button class="deleteButton" mat-stroked-button (click)="deleteTicket(ticket.ticket_id)"><mat-icon>delete</mat-icon></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+

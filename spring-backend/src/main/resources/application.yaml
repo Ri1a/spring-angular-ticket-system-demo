@@ -14,3 +14,9 @@ spring:
         hibernate:
             ddl-auto: update
         show-sql: true
+    security:
+        user:
+            name: admin
+            # Please note that in a productive environment the password needs to come from a
+            # secure password store using e.g. an environment variable, use this only for local development!
+            password: admin

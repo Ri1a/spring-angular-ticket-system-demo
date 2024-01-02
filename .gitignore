@@ -39,3 +39,6 @@ out/
 
 ### H2 database ###
 /data
+
+# Ignore Gradle build output directory
+build

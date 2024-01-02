@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -37,12 +38,14 @@ public class TicketController {
 
     @PostMapping("/add")
     public Ticket addTicket(@Valid @RequestBody Ticket ticket) {
+        ticket.setTicketId(UUID.randomUUID().toString());
         ticket.setCreationDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         return ticketRepository.save(ticket);
     }
 
     @PutMapping("/{id}/update")
     public Ticket updateTicket(@PathVariable String id, @Valid @RequestBody Ticket ticket) {
+        ticket.setTicketId(id);
         if (!ticketRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

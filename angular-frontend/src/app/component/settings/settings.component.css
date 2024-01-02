@@ -1,0 +1,65 @@
+.title {
+  color: #3F51B5;
+  text-align: center;
+  font-family: Roboto;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  text-align: left;
+}
+
+.example-card {
+  max-width: 400px;
+  margin-left: 150px;
+  margin-top: 10px;
+  border-top-style: solid;
+  border-top-color: #3F51B5;
+  background-color: white;
+}
+
+.example-header-image {
+  background-image: url('https://icons-for-free.com/download-icon-avatar+person+profile+user+icon-1320086059654790795_512.png');
+  background-size: cover;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.logoutbutton {
+  color: white;
+  font-family: Roboto;
+}
+
+.addNewUserText {
+  font-family: Roboto;
+  margin-left: 150px;
+
+}
+.addNewUserButton {
+  margin: 10px;
+}
+
+.titlerole {
+  color: black;
+  text-align: left;
+  font-family: Roboto;
+  margin-left: 150px;
+}
+
+.titlerole2 {
+  color: black;
+  text-align: left;
+  font-family: Roboto;
+  margin-left: 150px;
+  margin-top: 50px;
+}
+
+.deleteButton {
+  size: 10px 10px;
+}
+

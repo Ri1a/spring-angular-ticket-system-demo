@@ -1,0 +1,47 @@
+.h2-title {
+  color: #3F51B5;
+  font-family: Roboto;
+}
+
+.enterTitleBox {
+
+}
+
+.enterDescriptionBox {
+
+}
+
+.chooseStatusDropDown {
+
+}
+
+.saveButton {
+  background-color: #3F51B5;
+  color: white;
+  float:right;
+  margin-top: 60px;
+}
+
+.closeButton {
+  float: right;
+  margin-right: 10px;
+  margin-top: 60px;
+}
+
+.close.mat-button {
+  position: relative;
+  float: right;
+  float: right;
+  right: 0;
+  padding: 5px;
+  line-height: 14px;
+  min-width: auto;
+}
+
+.cdk-overlay-pane.my-dialog {
+  position: relative!important;
+}
+
+.mat-form-field {
+  width: 450px;
+}

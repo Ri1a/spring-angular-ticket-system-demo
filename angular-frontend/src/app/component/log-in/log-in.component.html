@@ -1,0 +1,27 @@
+<h1 class="logInTitle">Log In</h1>
+
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title></mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your username</mat-label>
+        <input #usernameInput matInput placeholder="KID">
+        <mat-icon matSuffix class="material-icons-outlined">person_outline</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input #passwordInput matInput [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button (click)="logInUser(usernameInput.value, passwordInput.value)" class="logInButton" mat-raised-button color="primary">Log In</button>
+  </mat-card-actions>
+</mat-card>

@@ -26,7 +26,7 @@ public class User implements UserDetails {
     private String id;
 
     @NotEmpty
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String username;
 
     @NotEmpty

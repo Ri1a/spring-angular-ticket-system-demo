@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -33,11 +34,13 @@ public class CommentController {
 
     @PostMapping("/add")
     public Comment addComment(@Valid @RequestBody Comment comment) {
+        comment.setId(UUID.randomUUID().toString());
         return commentRepository.save(comment);
     }
 
     @PostMapping("/{id}/edit")
     public Comment editComment(@PathVariable String id, @Valid @RequestBody Comment comment) {
+        comment.setId(id);
         if (!commentRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

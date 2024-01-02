@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,7 +19,7 @@ import java.util.UUID;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -63,4 +64,61 @@ public class UserControllerIntegrationTest {
 
         verify(userRepository, times(1)).findById(userId.toString());
     }
+
+    @Test
+    @WithMockUser
+    public void testAddUser() throws Exception {
+        User newUser = new User("testUser", "testPassword", Set.of("ROLE_ADMIN"));
+        when(userRepository.save(any(User.class))).thenReturn(newUser);
+
+        this.mockMvc.perform(
+                post("/users/add")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{\"username\":\"testUser\",\"password\":\"testPassword\",\"authorities\":[\"ROLE_ADMIN\"]}")
+            )
+            .andExpect(status().isOk())
+            .andExpect(content().string(containsString("testUser")));
+
+        verify(userRepository, times(1)).save(any(User.class));
+    }
+
+    @Test
+    @WithMockUser
+    public void testEditUser() throws Exception {
+        String userId = UUID.randomUUID().toString();
+        User existingUser = new User("existingUser", "password", Set.of("ROLE_USER"));
+        existingUser.setId(userId);
+
+        User updatedUser = new User("testUser", "testPassword", Set.of("ROLE_ADMIN"));
+        updatedUser.setId(userId);
+
+        when(userRepository.existsById(userId)).thenReturn(true);
+        when(userRepository.save(any(User.class))).thenReturn(updatedUser);
+
+        this.mockMvc.perform(
+                put("/users/" + userId + "/edit")
+                    .content("{\"username\":\"testUser\",\"password\":\"testPassword\",\"authorities\":null}")
+                    .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(status().isOk())
+            .andExpect(content().string(containsString("testUser")));
+
+        verify(userRepository, times(1)).save(refEq(updatedUser));
+    }
+
+    @Test
+    @WithMockUser
+    public void testDeleteUser() throws Exception {
+        String userId = UUID.randomUUID().toString();
+        User user = new User("username1", "password1", Set.of("ADMIN"));
+
+        when(this.userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        this.mockMvc.perform(delete("/users/" + userId + "/delete"))
+            .andExpect(status().isOk());
+
+        verify(this.userRepository, times(1)).findById(userId);
+        verify(this.userRepository, times(1)).delete(user);
+    }
+
 }

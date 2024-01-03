@@ -24,7 +24,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        RequestMatcher publicUrls = new AntPathRequestMatcher("/login");
+        RequestMatcher publicUrls = new AntPathRequestMatcher("/api/login");
 
         http
             .csrf(AbstractHttpConfigurer::disable)

@@ -21,7 +21,7 @@ public class LoginController {
         this.jwtService = jwtService;
     }
 
-    @PostMapping(path = "/login")
+    @PostMapping(path = "/api/login")
     public ResponseEntity<String> login(@RequestParam("username") String username,
                                         @RequestParam("password") String password) {
         User user = userService.findByUsername(username);

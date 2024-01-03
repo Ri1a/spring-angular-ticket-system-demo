@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
-@RequestMapping("/comments") // Base path for comments
+@RequestMapping("/api/comments")
 public class CommentController {
 
     private final CommentRepository commentRepository;

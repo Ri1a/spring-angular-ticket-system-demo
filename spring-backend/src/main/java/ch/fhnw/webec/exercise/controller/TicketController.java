@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
-@RequestMapping("/tickets")
+@RequestMapping("/api/tickets")
 public class TicketController {
 
     private final TicketRepository ticketRepository;

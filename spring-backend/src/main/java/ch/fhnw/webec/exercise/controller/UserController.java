@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserRepository userRepository;

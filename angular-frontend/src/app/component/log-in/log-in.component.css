@@ -1,30 +1,35 @@
 .logInTitle {
   color: #3F51B5;
-  text-align: center;
-  font-family: Roboto;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .mat-form-field {
-  width: 240px;
-  margin: 5px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
 }
 
 .card {
-  width: 500px;
-  height: 80px;
-  margin-left: 500px;
+  max-width: 350px;
+  width: 100%;
+  margin: 15px;
   background-color: #F6F8FC;
+  padding: 20px;
 }
 
-.mat-card {
-  color: #3F51B5;
-}
-
-.mat-form-field-label {
-  color: #3F51B5 !important;
+.mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .logInButton {
-  float: right;
+  max-width: 260px;
+  width: 100%;
+  margin-top: 10px;
 }

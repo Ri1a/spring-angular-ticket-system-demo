@@ -27,7 +27,7 @@ public class LoginController {
         User user = userService.findByUsername(username);
 
         if (user != null && user.getPassword().equals(password)) {
-            String token = jwtService.generateToken(username);
+            String token = jwtService.generateToken(user);
             return ResponseEntity.ok("Bearer " + token);
         } else {
             return ResponseEntity

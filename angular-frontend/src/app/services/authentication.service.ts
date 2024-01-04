@@ -12,7 +12,7 @@ export class AuthenticationService {
 
   authenticate(username: string, password: string) {
     return this.httpClient
-      .post<any>(this.REST_API_SERVER + "/authenticate", { username, password })
+      .post<any>(this.REST_API_SERVER + "/auth", { username, password })
       .pipe(
         map(userData => {
 

@@ -1,15 +1,16 @@
 package ch.fhnw.webec.exercise.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "\"user\"")
@@ -34,15 +35,20 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> authorities;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "user_authority",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "authority_id")
+    )
+    private Set<Authority> authorities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Ticket> tickets;
 
     public User() {}
 
-    public User(String username, String password, Set<String> authorities) {
+    public User(String username, String password, Set<Authority> authorities) {
         this.username = username;
         this.password = password;
         this.authorities = authorities;
@@ -52,13 +58,15 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public void setAuthorities(Set<String> authorities) {
+    public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities.stream().map(SimpleGrantedAuthority::new).toList();
+        return this.authorities.stream()
+            .map(authority -> new SimpleGrantedAuthority(authority.getName()))
+            .collect(Collectors.toSet());
     }
 
     public String get() {

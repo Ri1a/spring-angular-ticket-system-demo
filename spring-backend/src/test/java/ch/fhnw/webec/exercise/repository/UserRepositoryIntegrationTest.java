@@ -4,15 +4,20 @@ import ch.fhnw.webec.exercise.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.ActiveProfiles;
-import jakarta.validation.ConstraintViolationException;
+
+import java.util.Set;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ActiveProfiles("test")
 @DataJpaTest
 public class UserRepositoryIntegrationTest {
+    Set<String> authorities = Set.of("ROLE_ADMIN");
+
     @Autowired
     private UserRepository userRepository;
 
@@ -21,30 +26,24 @@ public class UserRepositoryIntegrationTest {
         var users = this.userRepository.findAll();
 
         assertEquals(3, users.size());
-        assertEquals("Test user 1", users.get(0).getUsername());
-        assertEquals("Test user 2", users.get(1).getUsername());
-        assertEquals("Test user 3", users.get(2).getUsername());
+        assertEquals("User 1", users.get(0).getUsername());
+        assertEquals("User 2", users.get(1).getUsername());
+        assertEquals("User 3", users.get(2).getUsername());
     }
 
     @Test
     public void testSaveUser() {
-        var user = new User("Testuser", "password111", "admin");
+        var user = new User("admin test", "password111", authorities);
+        user.setId(UUID.randomUUID().toString());
 
         assertEquals(3, this.userRepository.findAll().size());
 
         var savedUser = this.userRepository.save(user);
 
         assertEquals(4, this.userRepository.findAll().size());
-        assertEquals("Testuser", savedUser.getUsername());
+        assertEquals("admin test", savedUser.getUsername());
         assertEquals("password111", savedUser.getPassword());
-        assertEquals("admin", savedUser.getRole());
-    }
-
-    @Test
-    public void testSaveInvalidUser() {
-        assertThrows(ConstraintViolationException.class, () -> {
-            this.userRepository.save(new User());
-        });
+        assertTrue(savedUser.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")));
     }
 
     @Test

@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from "./services/authentication.service";
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
   title = 'angular-frontend';
@@ -20,8 +20,6 @@ export class AppComponent implements OnInit {
   }
 
   logoutUser(): void {
-    this.isUserLoggedIn = false;
-    sessionStorage.removeItem("username");
-    sessionStorage.clear();
+    this.authenticationService.logOut();
   }
 }

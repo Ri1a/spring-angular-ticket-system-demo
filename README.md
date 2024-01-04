@@ -13,13 +13,12 @@ This project outlines the development of a ticketing application, designed to st
 
 ### Individual
 
-Dobrawa:
 - Sophisticated and Responsive Design
-
-Riccardo:
 - Authentication & Authorization with JWT and Spring Security
 
 ## Installation and run instructions
+
+Install the npm packages with `npm install`
 
 Start the frontend with `npm start`
 

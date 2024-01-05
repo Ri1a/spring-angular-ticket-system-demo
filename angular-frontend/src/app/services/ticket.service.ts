@@ -11,9 +11,7 @@ export class TicketService {
   constructor(private httpClient: HttpClient) {}
 
   public getAllTickets(): Observable<Array<Tickets>> {
-    return this.httpClient.get<Array<Tickets>>(this.REST_API_SERVER, {
-      /*headers: TicketService.getHeaders()*/
-    });
+    return this.httpClient.get<Array<Tickets>>(this.REST_API_SERVER, {});
   }
 
   public updateTicketStatus(
@@ -28,7 +26,7 @@ export class TicketService {
 
   public updateTicket(ticket: Tickets): Observable<Tickets> {
     return this.httpClient.post<Tickets>(
-      this.REST_API_SERVER + "/" + ticket.ticket_id + '/update',
+      this.REST_API_SERVER + '/' + ticket.id + '/update',
       ticket,
       {}
     );
@@ -44,7 +42,7 @@ export class TicketService {
 
   public deleteTicket(ticketId: string): Observable<Tickets> {
     return this.httpClient.post<Tickets>(
-      this.REST_API_SERVER + "/" + ticketId + '/delete',
+      this.REST_API_SERVER + '/' + ticketId + '/delete',
       {}
     );
   }

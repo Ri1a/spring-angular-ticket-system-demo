@@ -4,44 +4,40 @@
 }
 
 .enterTitleBox {
-
 }
 
 .enterDescriptionBox {
-
 }
 
 .chooseStatusDropDown {
-
 }
 
 .saveButton {
   background-color: #3F51B5;
   color: white;
   float:right;
-  margin-top: 60px;
+  margin: 10px;
 }
 
 .closeButton {
   float: right;
-  margin-right: 10px;
-  margin-top: 60px;
+  margin: 10px;
 }
 
-.close.mat-button {
-  position: relative;
+.close {
   float: right;
-  float: right;
-  right: 0;
-  padding: 5px;
-  line-height: 14px;
-  min-width: auto;
 }
 
 .cdk-overlay-pane.my-dialog {
   position: relative!important;
 }
 
+.mat-dialog-container {
+  position: relative;
+  overflow: auto;
+}
+
 .mat-form-field {
-  width: 450px;
+  width: 100%;
+  max-width: 450px;
 }

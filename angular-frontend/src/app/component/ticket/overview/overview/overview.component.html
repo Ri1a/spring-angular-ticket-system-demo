@@ -7,6 +7,7 @@
       <mat-icon>add</mat-icon>
     </button>
   </h2>
+
   <div cdkDropListGroup>
     <div class="example-container">
       <h2>Open</h2>
@@ -15,7 +16,7 @@
            [cdkDropListData]="ticketListOpen"
            class="example-list"
            (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let ticket of ticketListOpen" cdkDrag (cdkDragStarted)="getCurrentTicket(ticket.id)">
+        <div class="example-box" *ngFor="let ticket of ticketListOpen" cdkDrag (cdkDragStarted)="getCurrentTicket(ticket)">
           {{ticket.title}}
           {{ticket.user}}
           <button mat-button (click)="openDialogPopUp(ticket)"><mat-icon>edit</mat-icon></button>
@@ -31,7 +32,7 @@
            [cdkDropListData]="ticketListProcess"
            class="example-list"
            (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let ticket of ticketListProcess" cdkDrag (cdkDragStarted)="getCurrentTicket(ticket.id)">
+        <div class="example-box" *ngFor="let ticket of ticketListProcess" cdkDrag (cdkDragStarted)="getCurrentTicket(ticket)">
           {{ticket.title}}
           <button mat-button (click)="openDialogPopUp(ticket)"><mat-icon>edit</mat-icon></button>
           <button class="deleteButton" mat-stroked-button (click)="deleteTicket(ticket.id)"><mat-icon>delete</mat-icon></button>
@@ -46,7 +47,7 @@
            [cdkDropListData]="ticketListReview"
            class="example-list"
            (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let ticket of ticketListReview" cdkDrag (cdkDragStarted)="getCurrentTicket(ticket.id)">
+        <div class="example-box" *ngFor="let ticket of ticketListReview" cdkDrag (cdkDragStarted)="getCurrentTicket(ticket)">
           {{ticket.title}}
           <button mat-button (click)="openDialogPopUp(ticket)"><mat-icon>edit</mat-icon></button>
           <button class="deleteButton" mat-stroked-button (click)="deleteTicket(ticket.id)"><mat-icon>delete</mat-icon></button>
@@ -61,7 +62,7 @@
            [cdkDropListData]="ticketListDone"
            class="example-list"
            (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let ticket of ticketListDone" cdkDrag (cdkDragStarted)="getCurrentTicket(ticket.id)">
+        <div class="example-box" *ngFor="let ticket of ticketListDone" cdkDrag (cdkDragStarted)="getCurrentTicket(ticket)">
           {{ticket.title}}
           <button mat-button (click)="openDialogPopUp(ticket)"><mat-icon>edit</mat-icon></button>
           <button class="deleteButton" mat-stroked-button (click)="deleteTicket(ticket.id)"><mat-icon>delete</mat-icon></button>

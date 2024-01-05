@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Tickets } from '../models/tickets';
+import {tick} from "@angular/core/testing";
 
 @Injectable({
   providedIn: 'root',
@@ -17,9 +18,9 @@ export class TicketService {
   public updateTicketStatus(
     ticketId: string,
     status: string
-  ): Observable<Array<Tickets>> {
-    return this.httpClient.put<Array<Tickets>>(
-      this.REST_API_SERVER + '/' + ticketId + '/status',
+  ): Observable<Tickets> {
+    return this.httpClient.post<Tickets>(
+      this.REST_API_SERVER + '/' + ticketId + '/status', status,
       {}
     );
   }

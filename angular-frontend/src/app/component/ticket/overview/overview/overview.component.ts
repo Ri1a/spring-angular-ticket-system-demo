@@ -26,6 +26,7 @@ export class OverviewComponent implements OnInit {
   userList: User[] = [];
 
   currentMovedTicketId: string = "";
+  currentMovedTicket?: Tickets;
 
   constructor(private ticketService: TicketService,
               public dialog: MatDialog) {
@@ -45,8 +46,9 @@ export class OverviewComponent implements OnInit {
     });
   }
 
-  getCurrentTicket(ticketId: string): void{
-    this.currentMovedTicketId = ticketId;
+  getCurrentTicket(ticket: Tickets): void{
+    this.currentMovedTicketId = ticket.id;
+    this.currentMovedTicket = ticket;
   }
 
   openDialogPopUp(ticket: Tickets) {
@@ -77,8 +79,9 @@ export class OverviewComponent implements OnInit {
 
   drop(event: CdkDragDrop<Tickets[], any>) {
     if(event.container.id != undefined) {
-      if(this.currentMovedTicketId != null && this.currentMovedTicketId != undefined) {
-        this.ticketService.updateTicketStatus(this.currentMovedTicketId, event.container.id).subscribe(result => console.log(result));
+      if(this.currentMovedTicket != null && this.currentMovedTicket != undefined) {
+        this.currentMovedTicket.status = event.container.id;
+        this.ticketService.updateTicket(this.currentMovedTicket).subscribe(result => console.log(result));
       }
     }
     if (event.previousContainer === event.container) {

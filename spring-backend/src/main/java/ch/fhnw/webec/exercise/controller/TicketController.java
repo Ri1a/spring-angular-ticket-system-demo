@@ -61,7 +61,7 @@ public class TicketController {
         ticketRepository.deleteById(id);
     }
 
-    @PutMapping("/{id}/status")
+    @PostMapping("/{id}/status")
     public Ticket updateTicketStatus(@PathVariable String id, @RequestBody StatusEnum status) {
         Ticket ticket = ticketRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

@@ -4,6 +4,7 @@ import ch.fhnw.webec.exercise.model.User;
 import ch.fhnw.webec.exercise.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,23 +22,27 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/{id}")
     public User showUser(@PathVariable String id) {
         return userRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/add")
     public User addUser(@Valid @RequestBody User user) {
         user.setId(UUID.randomUUID().toString());
         return userRepository.save(user);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/{id}/edit")
     public User editUser(@PathVariable String id, @Valid @RequestBody User user) {
         user.setId(id);
@@ -47,6 +52,7 @@ public class UserController {
         return userRepository.save(user);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/{id}/delete")
     public void deleteUser(@PathVariable String id) {
         if (!userRepository.existsById(id)) {

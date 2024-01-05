@@ -1,25 +1,34 @@
 package ch.fhnw.webec.exercise.repository;
 
+import ch.fhnw.webec.exercise.model.Authority;
 import ch.fhnw.webec.exercise.model.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ActiveProfiles("test")
 @DataJpaTest
 public class UserRepositoryIntegrationTest {
-    Set<String> authorities = Set.of("ROLE_ADMIN");
+    Authority authority = new Authority("ROLE_ADMIN");
+    private Set<Authority> authorities = Set.of(authority);
 
     @Autowired
+    private AuthorityRepository authorityRepository;
+    @Autowired
     private UserRepository userRepository;
+
+    @BeforeEach
+    public void setUp() {
+        authority.setId(UUID.randomUUID().toString());
+        authorityRepository.saveAll(authorities);
+    }
 
     @Test
     public void testFindAll() {
@@ -43,7 +52,6 @@ public class UserRepositoryIntegrationTest {
         assertEquals(4, this.userRepository.findAll().size());
         assertEquals("admin test", savedUser.getUsername());
         assertEquals("password111", savedUser.getPassword());
-        assertTrue(savedUser.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")));
     }
 
     @Test

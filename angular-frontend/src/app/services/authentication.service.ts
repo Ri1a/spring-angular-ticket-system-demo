@@ -27,7 +27,7 @@ export class AuthenticationService {
         map((response) => {
           const token = response;
           sessionStorage.setItem('username', username);
-          sessionStorage.setItem('token', 'Bearer ' + token);
+          sessionStorage.setItem('token', token);
 
           window.location.href = 'http://localhost:4200/overview';
           return { token };

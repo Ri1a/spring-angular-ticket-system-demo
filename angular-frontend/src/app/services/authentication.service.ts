@@ -55,6 +55,7 @@ export class AuthenticationService {
     if (typeof window !== 'undefined') {
       sessionStorage.removeItem('username');
       sessionStorage.clear();
+      window.location.reload()
     }
   }
 }

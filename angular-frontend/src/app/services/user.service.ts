@@ -7,35 +7,28 @@ import { User } from '../models/user';
   providedIn: 'root',
 })
 export class UserService {
-  private REST_API_SERVER = 'http://localhost:8080/api';
+  private REST_API_SERVER = 'http://localhost:8080/api/users';
   constructor(private httpClient: HttpClient) {}
 
   public getAllUser(): Observable<Array<User>> {
-    return this.httpClient.get<Array<User>>(
-      this.REST_API_SERVER + '/user/getAllUser',
-      {}
-    );
+    return this.httpClient.get<Array<User>>(this.REST_API_SERVER, {});
   }
 
   public updateUser(user: User): Observable<User> {
-    return this.httpClient.post<User>(
-      this.REST_API_SERVER + '/updateUser',
+    return this.httpClient.put<User>(
+      this.REST_API_SERVER + '/' + user.user_id + '/edit',
       user,
       {}
     );
   }
 
   public saveUser(user: User): Observable<User> {
-    return this.httpClient.post<User>(
-      this.REST_API_SERVER + '/saveUser',
-      user,
-      {}
-    );
+    return this.httpClient.post<User>(this.REST_API_SERVER + '/add', user, {});
   }
 
   public deleteUser(userID: string): Observable<User> {
     return this.httpClient.post<User>(
-      this.REST_API_SERVER + '/deleteUser/' + userID,
+      this.REST_API_SERVER + '/' + userID + '/delete',
       {}
     );
   }

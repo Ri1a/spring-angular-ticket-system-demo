@@ -28,7 +28,7 @@ export class TicketService {
 
   public updateTicket(ticket: Tickets): Observable<Tickets> {
     return this.httpClient.post<Tickets>(
-      this.REST_API_SERVER + ticket.ticket_id + '/update',
+      this.REST_API_SERVER + "/" + ticket.ticket_id + '/update',
       ticket,
       {}
     );
@@ -44,7 +44,7 @@ export class TicketService {
 
   public deleteTicket(ticketId: string): Observable<Tickets> {
     return this.httpClient.post<Tickets>(
-      this.REST_API_SERVER + ticketId + '/delete',
+      this.REST_API_SERVER + "/" + ticketId + '/delete',
       {}
     );
   }

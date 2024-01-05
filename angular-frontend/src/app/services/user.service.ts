@@ -9,23 +9,23 @@ import {User} from "../models/user";
 
 export class UserService {
 
-  private REST_API_SERVER = "http://localhost:8080/api"
+  private REST_API_SERVER = "http://localhost:8080/api/users"
   constructor(private httpClient:HttpClient) { }
 
   public getAllUser(): Observable<Array<User>> {
-    return this.httpClient.get<Array<User>>(this.REST_API_SERVER + "/user/getAllUser", {headers: UserService.getHeaders()})
+    return this.httpClient.get<Array<User>>(this.REST_API_SERVER, {headers: UserService.getHeaders()})
   }
 
   public updateUser(user: User): Observable<User> {
-    return this.httpClient.post<User>(this.REST_API_SERVER + "/updateUser",user,{headers: UserService.getHeaders()});
+    return this.httpClient.put<User>(this.REST_API_SERVER + "/" + user.user_id + "/edit",user,{headers: UserService.getHeaders()});
   }
 
   public saveUser(user: User): Observable<User> {
-    return this.httpClient.post<User>(this.REST_API_SERVER + "/saveUser",user,{headers: UserService.getHeaders()} );
+    return this.httpClient.post<User>(this.REST_API_SERVER + "/add",user,{headers: UserService.getHeaders()} );
   }
 
   public deleteUser(userID: string): Observable<User> {
-    return this.httpClient.post<User>(this.REST_API_SERVER + "/deleteUser/" + userID,{headers: UserService.getHeaders()});
+    return this.httpClient.post<User>(this.REST_API_SERVER + "/" + userID + "/delete",{headers: UserService.getHeaders()});
   }
 
   public static getHeaders(contentType: string = 'application/json'): HttpHeaders {

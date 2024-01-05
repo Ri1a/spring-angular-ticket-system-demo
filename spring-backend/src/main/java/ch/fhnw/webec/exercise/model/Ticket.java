@@ -9,8 +9,15 @@ import java.util.List;
 @Entity
 public class Ticket {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @NotEmpty
     @Column(nullable = false, unique = true)
@@ -30,13 +37,6 @@ public class Ticket {
     @ManyToOne
     private User user;
 
-    public String getTicketId() {
-        return id;
-    }
-
-    public void setTicketId(String ticketId) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;

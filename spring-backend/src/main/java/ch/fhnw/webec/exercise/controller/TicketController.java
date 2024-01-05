@@ -38,14 +38,14 @@ public class TicketController {
 
     @PostMapping("/add")
     public Ticket addTicket(@Valid @RequestBody Ticket ticket) {
-        ticket.setTicketId(UUID.randomUUID().toString());
+        ticket.setId(UUID.randomUUID().toString());
         ticket.setCreationDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         return ticketRepository.save(ticket);
     }
 
     @PutMapping("/{id}/update")
     public Ticket updateTicket(@PathVariable String id, @Valid @RequestBody Ticket ticket) {
-        ticket.setTicketId(id);
+        ticket.setId(id);
         if (!ticketRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

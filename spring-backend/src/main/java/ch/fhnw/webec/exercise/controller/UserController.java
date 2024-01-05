@@ -38,7 +38,7 @@ public class UserController {
         return userRepository.save(user);
     }
 
-    @PutMapping("/{id}/edit")
+    @PostMapping("/{id}/edit")
     public User editUser(@PathVariable String id, @Valid @RequestBody User user) {
         user.setId(id);
         if (!userRepository.existsById(id)) {
@@ -47,7 +47,7 @@ public class UserController {
         return userRepository.save(user);
     }
 
-    @DeleteMapping("/{id}/delete")
+    @PostMapping("/{id}/delete")
     public void deleteUser(@PathVariable String id) {
         if (!userRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

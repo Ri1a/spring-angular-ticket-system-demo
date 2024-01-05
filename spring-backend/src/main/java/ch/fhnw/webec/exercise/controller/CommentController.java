@@ -47,7 +47,7 @@ public class CommentController {
         return commentRepository.save(comment);
     }
 
-    @DeleteMapping("/{id}/delete")
+    @PostMapping("/{id}/delete")
     public void deleteComment(@PathVariable String id) {
         if (!commentRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

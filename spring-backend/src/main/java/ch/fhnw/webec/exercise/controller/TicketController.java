@@ -43,7 +43,7 @@ public class TicketController {
         return ticketRepository.save(ticket);
     }
 
-    @PutMapping("/{id}/update")
+    @PostMapping("/{id}/update")
     public Ticket updateTicket(@PathVariable String id, @Valid @RequestBody Ticket ticket) {
         ticket.setId(id);
         if (!ticketRepository.existsById(id)) {
@@ -53,7 +53,7 @@ public class TicketController {
         return ticketRepository.save(ticket);
     }
 
-    @DeleteMapping("/{id}/delete")
+    @PostMapping("/{id}/delete")
     public void deleteTicket(@PathVariable String id) {
         if (!ticketRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

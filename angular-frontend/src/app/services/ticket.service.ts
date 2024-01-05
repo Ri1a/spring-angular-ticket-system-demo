@@ -1,43 +1,51 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Tickets} from "../models/tickets";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Tickets } from '../models/tickets';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class TicketService {
-
-  private REST_API_SERVER = "http://localhost:8080/api/tickets"
-  constructor(private httpClient:HttpClient) { }
+  private REST_API_SERVER = 'http://localhost:8080/api/tickets';
+  constructor(private httpClient: HttpClient) {}
 
   public getAllTickets(): Observable<Array<Tickets>> {
-    return this.httpClient.get<Array<Tickets>>(this.REST_API_SERVER, {headers: TicketService.getHeaders()})
+    return this.httpClient.get<Array<Tickets>>(this.REST_API_SERVER, {
+      /*headers: TicketService.getHeaders()*/
+    });
   }
 
-  public updateTicketStatus(ticketId: string, status: string): Observable<Array<Tickets>> {
-    return this.httpClient.put<Array<Tickets>>(this.REST_API_SERVER + "/" + ticketId + "/status",{},{headers: TicketService.getHeaders()} );
+  public updateTicketStatus(
+    ticketId: string,
+    status: string
+  ): Observable<Array<Tickets>> {
+    return this.httpClient.put<Array<Tickets>>(
+      this.REST_API_SERVER + '/' + ticketId + '/status',
+      {}
+    );
   }
 
   public updateTicket(ticket: Tickets): Observable<Tickets> {
-    return this.httpClient.post<Tickets>(this.REST_API_SERVER + ticket.ticket_id + "/update",ticket,{headers: TicketService.getHeaders()});
+    return this.httpClient.post<Tickets>(
+      this.REST_API_SERVER + ticket.ticket_id + '/update',
+      ticket,
+      {}
+    );
   }
 
   public addTicket(ticket: Tickets): Observable<Tickets> {
-    return this.httpClient.post<Tickets>(this.REST_API_SERVER + "/add",ticket,{headers: TicketService.getHeaders()} );
+    return this.httpClient.post<Tickets>(
+      this.REST_API_SERVER + '/add',
+      ticket,
+      {}
+    );
   }
 
   public deleteTicket(ticketId: string): Observable<Tickets> {
-    return this.httpClient.post<Tickets>(this.REST_API_SERVER + ticketId + "/delete",{headers: TicketService.getHeaders()});
-  }
-
-  public static getHeaders(contentType: string = 'application/json'): HttpHeaders {
-    let headers = new HttpHeaders().set('Content-Type', contentType);
-    headers = headers.append('Cache-Control', 'no-cache');
-    headers = headers.append('Pragma', 'no-cache');
-    headers = headers.append('Access-Control-Allow-Origin', 'http://localhost:4200');
-    headers =  headers.append('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
-    return headers;
+    return this.httpClient.post<Tickets>(
+      this.REST_API_SERVER + ticketId + '/delete',
+      {}
+    );
   }
 }

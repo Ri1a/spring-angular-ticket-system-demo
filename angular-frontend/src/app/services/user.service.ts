@@ -15,7 +15,7 @@ export class UserService {
   }
 
   public updateUser(user: User): Observable<User> {
-    return this.httpClient.put<User>(
+    return this.httpClient.post<User>(
       this.REST_API_SERVER + '/' + user.id + '/edit',
       user,
       {}

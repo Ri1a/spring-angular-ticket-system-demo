@@ -9,19 +9,19 @@ import {Tickets} from "../models/tickets";
 
 export class TicketService {
 
-  private REST_API_SERVER = "http://localhost:8080/api"
+  private REST_API_SERVER = "http://localhost:8080/api/tickets"
   constructor(private httpClient:HttpClient) { }
 
   public getAllTickets(): Observable<Array<Tickets>> {
-    return this.httpClient.get<Array<Tickets>>(this.REST_API_SERVER + "/tickets", {headers: TicketService.getHeaders()})
+    return this.httpClient.get<Array<Tickets>>(this.REST_API_SERVER, {headers: TicketService.getHeaders()})
   }
 
   public updateTicketStatus(ticketId: string, status: string): Observable<Array<Tickets>> {
-    return this.httpClient.post<Array<Tickets>>(this.REST_API_SERVER + "/updateTicketStatus/" + ticketId+ "/" + status,{},{headers: TicketService.getHeaders()} );
+    return this.httpClient.put<Array<Tickets>>(this.REST_API_SERVER + "/" + ticketId + "/status",{},{headers: TicketService.getHeaders()} );
   }
 
   public updateTicket(ticket: Tickets): Observable<Tickets> {
-    return this.httpClient.post<Tickets>(this.REST_API_SERVER + "/updateTicket",ticket,{headers: TicketService.getHeaders()});
+    return this.httpClient.post<Tickets>(this.REST_API_SERVER + ticket.ticket_id + "/update",ticket,{headers: TicketService.getHeaders()});
   }
 
   public addTicket(ticket: Tickets): Observable<Tickets> {
@@ -29,7 +29,7 @@ export class TicketService {
   }
 
   public deleteTicket(ticketId: string): Observable<Tickets> {
-    return this.httpClient.post<Tickets>(this.REST_API_SERVER + "/delete/" + ticketId,{headers: TicketService.getHeaders()});
+    return this.httpClient.post<Tickets>(this.REST_API_SERVER + ticketId + "/delete",{headers: TicketService.getHeaders()});
   }
 
   public static getHeaders(contentType: string = 'application/json'): HttpHeaders {

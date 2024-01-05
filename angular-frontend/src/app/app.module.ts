@@ -29,6 +29,8 @@ import {AppRoutingModule} from "./app-routing.module";
 import { SettingsComponent } from './component/settings/settings.component';
 import { NewUserComponent } from './component/new-user/new-user.component';
 import {BasicAuthInterceptorService} from "./services/basic-auth-interceptor.service";
+import { AboutComponent } from './component/about/about.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import {BasicAuthInterceptorService} from "./services/basic-auth-interceptor.ser
     LogInComponent,
     SettingsComponent,
     NewUserComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,8 @@ import {BasicAuthInterceptorService} from "./services/basic-auth-interceptor.ser
     MatButtonModule,
     FormsModule,
     RouterModule.forRoot([]),
-    AppRoutingModule
+    AppRoutingModule,
+    MatTabsModule
   ],
   providers: [{
     provide: MatDialogRef,

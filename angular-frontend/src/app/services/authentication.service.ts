@@ -57,8 +57,9 @@ export class AuthenticationService {
 
   isUserAdmin(): boolean {
     if (typeof window !== 'undefined') {
-      let userRole = sessionStorage.getItem('role');
-      if (userRole == '[ROLE_ADMIN]') {
+      let userRole = sessionStorage.getItem('roles');
+
+      if (userRole == '[\"ROLE_ADMIN\"]') {
         return true;
       } else {
         return false;

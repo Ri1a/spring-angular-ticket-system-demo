@@ -23,7 +23,7 @@ public class Ticket {
     private String title;
 
     @NotEmpty
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String description;
     private Date creationDate;
 
@@ -40,6 +40,34 @@ public class Ticket {
 
     public Project getProject() {
         return project;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setProject(Project project) {

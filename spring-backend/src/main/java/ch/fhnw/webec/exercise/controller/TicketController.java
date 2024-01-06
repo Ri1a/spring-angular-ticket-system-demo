@@ -5,6 +5,7 @@ import ch.fhnw.webec.exercise.model.Ticket;
 import ch.fhnw.webec.exercise.repository.TicketRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,17 +26,20 @@ public class TicketController {
         this.ticketRepository = ticketRepository;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public List<Ticket> getAllTickets() {
         return ticketRepository.findAll();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/{id}")
     public Ticket showTicket(@PathVariable String id) {
         return ticketRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/add")
     public Ticket addTicket(@Valid @RequestBody Ticket ticket) {
         ticket.setId(UUID.randomUUID().toString());
@@ -43,6 +47,7 @@ public class TicketController {
         return ticketRepository.save(ticket);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/{id}/update")
     public Ticket updateTicket(@PathVariable String id, @Valid @RequestBody Ticket ticket) {
         ticket.setId(id);
@@ -53,6 +58,7 @@ public class TicketController {
         return ticketRepository.save(ticket);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/{id}/delete")
     public void deleteTicket(@PathVariable String id) {
         if (!ticketRepository.existsById(id)) {
@@ -61,6 +67,7 @@ public class TicketController {
         ticketRepository.deleteById(id);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/{id}/status")
     public Ticket updateTicketStatus(@PathVariable String id, @RequestBody StatusEnum status) {
         Ticket ticket = ticketRepository.findById(id)

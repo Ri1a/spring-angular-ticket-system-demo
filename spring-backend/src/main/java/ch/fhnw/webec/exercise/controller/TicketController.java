@@ -5,6 +5,7 @@ import ch.fhnw.webec.exercise.model.Ticket;
 import ch.fhnw.webec.exercise.repository.TicketRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -44,7 +45,11 @@ public class TicketController {
     public Ticket addTicket(@Valid @RequestBody Ticket ticket) {
         ticket.setId(UUID.randomUUID().toString());
         ticket.setCreationDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        return ticketRepository.save(ticket);
+        try {
+            return ticketRepository.save(ticket);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error creating ticket.");
+        }
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
@@ -52,27 +57,44 @@ public class TicketController {
     public Ticket updateTicket(@PathVariable String id, @Valid @RequestBody Ticket ticket) {
         ticket.setId(id);
         if (!ticketRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found.");
         }
         ticket.setCreationDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        return ticketRepository.save(ticket);
+        try {
+            return ticketRepository.save(ticket);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating ticket.");
+        }
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/{id}/delete")
     public void deleteTicket(@PathVariable String id) {
         if (!ticketRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found.");
         }
-        ticketRepository.deleteById(id);
+        try {
+            ticketRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting ticket.");
+        }
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/{id}/status")
     public Ticket updateTicketStatus(@PathVariable String id, @RequestBody StatusEnum status) {
         Ticket ticket = ticketRepository.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found."));
         ticket.setStatus(status);
-        return ticketRepository.save(ticket);
+        try {
+            return ticketRepository.save(ticket);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating ticket status.");
+        }
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<Object> handleResponseStatusException(ResponseStatusException ex) {
+        return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
     }
 }

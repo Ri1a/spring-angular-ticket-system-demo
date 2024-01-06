@@ -7,7 +7,11 @@
   <p>
     <mat-form-field class="enterTitleBox">
       <mat-label>Title</mat-label>
-      <input #titleInput [(ngModel)]="ticket.title" matInput placeholder="Enter title">
+      <input #titleInput="ngModel" [(ngModel)]="ticket.title" matInput placeholder="Enter title" required>
+      <mat-error *ngIf="titleInput.errors?.['required'] && titleInput.touched">
+        Title is required.
+      </mat-error>
+
     </mat-form-field>
   </p>
 
@@ -35,7 +39,8 @@
 </mat-dialog-content>
 
 <div class="action-buttons">
-  <button class="saveButton" mat-raised-button (click)="onDialogSave(titleInput.value, descriptionInput.value, statusInput.value)">Save</button>
+<button class="saveButton" mat-raised-button [disabled]="titleInput.invalid"
+  (click)="onDialogSave(titleInput.value, descriptionInput.value, statusInput.value)">Save</button>
   <button class="closeButton" mat-raised-button (click)="onDialogClose()">Close</button>
 </div>
 

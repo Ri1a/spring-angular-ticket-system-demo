@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {TicketService} from "../../../../services/ticket.service";
-import {Tickets} from "../../../../models/tickets";
+import {TicketService} from "../../../services/ticket.service";
+import {Tickets} from "../../../models/tickets";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {MatDialog} from "@angular/material/dialog";
 import {NewTicketComponent} from "../new-ticket/new-ticket.component";
-import {User} from "../../../../models/user";
+import {User} from "../../../models/user";
 
 
 @Component({

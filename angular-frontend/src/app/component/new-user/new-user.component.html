@@ -1,35 +1,41 @@
-<button class="close" mat-button (click)="onDialogClose()">X</button>
-<h1 mat-dialog-title>Create new user</h1>
+<form [formGroup]="userForm">
+  <button class="close" mat-button (click)="onDialogClose()">X</button>
+  <h1 mat-dialog-title>Create new user</h1>
 
-<mat-dialog-content>
-  <p>
-    <mat-form-field class="enterUsernameBox">
-      <mat-label>Username</mat-label>
-      <input #usernameInput [(ngModel)]="user.username" matInput placeholder="Enter username">
-    </mat-form-field>
-  </p>
-
-  <p>
-    <mat-form-field class="enterPasswordBox">
-      <mat-label>Password</mat-label>
-      <input #passwordInput [(ngModel)]="user.password" matInput placeholder="Enter password">
-    </mat-form-field>
-  </p>
-
-  <div>
+  <mat-dialog-content>
+    <p>
+      <mat-form-field class="enterUsernameBox">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" placeholder="Enter username">
+        <mat-error *ngIf="userForm.controls['username'].invalid">
+          Username is required
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="enterPasswordBox">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" placeholder="Enter password" type="password">
+        <mat-error *ngIf="userForm.controls['password'].errors?.['required']">
+          Password is required
+        </mat-error>
+        <mat-error *ngIf="userForm.controls['password'].errors?.['minlength']">
+          Password must be at least 6 characters
+        </mat-error>
+      </mat-form-field>
+    </p>
     <mat-form-field class="chooseRoleDropDown" appearance="fill">
       <mat-label>Role</mat-label>
-      <mat-select #roleInput [(ngModel)]="user.role">
+      <mat-select formControlName="role">
         <mat-option *ngFor="let role of roleArrayList" [value]="role">
-          {{role}}
+          {{ role }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </div>
-</mat-dialog-content>
 
 <mat-card-actions align="end">
   <button class="closeButton" mat-raised-button (click)="onDialogClose()">Close</button>
-  <button class="saveButton" mat-raised-button (click)="onDialogSave(usernameInput.value, passwordInput.value, roleInput.value)">Save</button>
+  <button class="saveButton" mat-raised-button (click)="onDialogSave()">Save</button>
 </mat-card-actions>
-
+  </mat-dialog-content>
+</form>

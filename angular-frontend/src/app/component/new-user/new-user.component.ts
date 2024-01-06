@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { User } from '../../models/user';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-user',
@@ -9,7 +10,9 @@ import { UserService } from '../../services/user.service';
   styleUrl: './new-user.component.css',
 })
 export class NewUserComponent implements OnInit {
+  userForm: FormGroup;
   user: User = new User();
+  roleArrayList: string[] = ['ROLE_ADMIN', 'ROLE_USER'];
 
   constructor(
     private userService: UserService,
@@ -17,29 +20,34 @@ export class NewUserComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data: User
   ) {
     this.user = data;
+    this.userForm = new FormGroup({
+      username: new FormControl(this.user.username, [Validators.required]),
+      password: new FormControl(this.user.password, [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
+      role: new FormControl('ROLE_USER'),
+    });
   }
-
-  roleArrayList: string[] = ['Admin', 'Normal'];
 
   ngOnInit(): void {}
 
-  onDialogSave(username: string, password: string, role: string): void {
-    if (this.user.id == null || this.user.id == '') {
-      let user: User = new User();
-      user.username = username;
-      user.password = password;
-      user.role = role;
-      this.userService.saveUser(user).subscribe((result) => {
-        if (result) {
+  onDialogSave(): void {
+    if (this.userForm.valid) {
+      const formValue = this.userForm.value;
+      this.user.username = formValue.username;
+      this.user.password = formValue.password;
+      this.user.authorities = [formValue.role];
+
+      if (!this.user.id) {
+        this.userService.saveUser(this.user).subscribe((result) => {
           this.dialogRef.close();
-        }
-      });
-    } else {
-      this.userService.updateUser(this.user).subscribe((result) => {
-        if (result) {
+        });
+      } else {
+        this.userService.updateUser(this.user).subscribe((result) => {
           this.dialogRef.close();
-        }
-      });
+        });
+      }
     }
   }
 

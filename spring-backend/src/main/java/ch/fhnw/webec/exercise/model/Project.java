@@ -1,7 +1,6 @@
 package ch.fhnw.webec.exercise.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
@@ -10,10 +9,6 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
-
-    @NotEmpty
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String text;
 
     @OneToMany(mappedBy="project", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
@@ -29,13 +24,6 @@ public class Project {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
 
     public List<Ticket> getTickets() {
         return tickets;

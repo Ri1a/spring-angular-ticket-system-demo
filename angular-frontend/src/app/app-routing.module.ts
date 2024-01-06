@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'login', component: LogInComponent  },
   { path: 'settings', component: SettingsComponent,canActivate:[AuthGuardService, RoleGuardService]},
   { path: 'about', component: AboutComponent  },
+  { path: '**', redirectTo: '/login' },
 ];
 
 @NgModule({

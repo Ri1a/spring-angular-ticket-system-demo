@@ -6,6 +6,7 @@ import {SettingsComponent} from "./component/settings/settings.component";
 import {AuthGuardService} from "./services/auth-guard.service";
 import {RoleGuardService} from "./services/role-guard.service";
 import {AboutComponent} from "./component/about/about.component";
+import {ProjectComponent} from "./component/project/project.component";
 
 const routes: Routes = [
   { path: 'overview', component: OverviewComponent,canActivate:[AuthGuardService]  },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent,canActivate:[AuthGuardService, RoleGuardService]},
   { path: 'about', component: AboutComponent  },
   { path: '**', redirectTo: '/login' },
+  { path: 'project', component: ProjectComponent  },
 ];
 
 @NgModule({

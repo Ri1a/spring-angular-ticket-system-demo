@@ -9,11 +9,11 @@ import {AboutComponent} from "./component/about/about.component";
 import {ProjectComponent} from "./component/project/project-overview/project.component";
 
 const routes: Routes = [
-  { path: 'overview', component: OverviewComponent,canActivate:[AuthGuardService]  },
+  { path: 'overview/:id', component: OverviewComponent,canActivate:[AuthGuardService]  },
   { path: 'login', component: LogInComponent  },
   { path: 'settings', component: SettingsComponent,canActivate:[AuthGuardService, RoleGuardService]},
   { path: 'about', component: AboutComponent  },
-  { path: 'project', component: ProjectComponent  },
+  { path: 'project', component: ProjectComponent, canActivate:[AuthGuardService]  },
   { path: '**', redirectTo: '/login' },
 ];
 

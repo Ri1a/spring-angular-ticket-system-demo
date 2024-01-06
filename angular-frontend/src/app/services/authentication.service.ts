@@ -41,7 +41,7 @@ export class AuthenticationService {
             );
           }
 
-          window.location.href = 'http://localhost:4200/overview';
+          window.location.href = 'http://localhost:4200/project';
           return { token };
         })
       );

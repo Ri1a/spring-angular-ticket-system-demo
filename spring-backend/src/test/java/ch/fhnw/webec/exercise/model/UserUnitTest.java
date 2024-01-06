@@ -8,7 +8,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 public class UserUnitTest {
@@ -53,19 +52,6 @@ public class UserUnitTest {
         var passwordViolations = this.getConstraintViolationsByPropertyPath(constraintViolations, "password");
 
         assertEquals("Must not be null", 1, passwordViolations.size());
-    }
-
-    @Test
-    void testTicketsRelation() {
-        User user = new User();
-        Ticket ticket1 = new Ticket();
-        Ticket ticket2 = new Ticket();
-
-        user.setTickets(List.of(ticket1, ticket2));
-
-        assertEquals("", 2, user.getTickets().size());
-        assertTrue(user.getTickets().contains(ticket1));
-        assertTrue(user.getTickets().contains(ticket2));
     }
 
     @Test

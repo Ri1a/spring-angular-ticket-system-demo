@@ -43,8 +43,6 @@ public class User implements UserDetails {
     )
     private Set<Authority> authorities;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Ticket> tickets;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Project> projects;
@@ -106,13 +104,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
-    }
 
     public List<Project> getProjects() {
         return projects;

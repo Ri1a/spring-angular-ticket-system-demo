@@ -32,9 +32,6 @@ public class Ticket {
 
 
     @ManyToOne
-    private User user;
-
-    @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
 
@@ -60,14 +57,6 @@ public class Ticket {
 
     public Date getCreationDate() {
         return creationDate;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public void setProject(Project project) {

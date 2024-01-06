@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { jwtDecode } from 'jwt-decode';
+
+interface Jwt {
+  authorities: string[];
+}
 
 @Injectable({
   providedIn: 'root',
@@ -24,10 +29,17 @@ export class AuthenticationService {
         responseType: 'text' as 'json',
       })
       .pipe(
-        map((response) => {
-          const token = response;
+        map((token: string) => {
           sessionStorage.setItem('username', username);
           sessionStorage.setItem('token', token);
+
+          const decodedToken: Jwt = jwtDecode(token);
+          if (decodedToken && decodedToken.authorities) {
+            sessionStorage.setItem(
+              'roles',
+              JSON.stringify(decodedToken.authorities)
+            );
+          }
 
           window.location.href = 'http://localhost:4200/overview';
           return { token };
@@ -46,7 +58,11 @@ export class AuthenticationService {
   isUserAdmin(): boolean {
     if (typeof window !== 'undefined') {
       let userRole = sessionStorage.getItem('role');
-      return userRole === 'Admin';
+      if (userRole == '[ROLE_ADMIN]') {
+        return true;
+      } else {
+        return false;
+      }
     }
     return false;
   }
@@ -55,7 +71,7 @@ export class AuthenticationService {
     if (typeof window !== 'undefined') {
       sessionStorage.removeItem('username');
       sessionStorage.clear();
-      window.location.reload()
+      window.location.reload();
     }
   }
 }

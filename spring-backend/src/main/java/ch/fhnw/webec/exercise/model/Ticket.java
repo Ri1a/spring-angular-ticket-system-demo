@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Ticket {
@@ -31,31 +30,20 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ticket")
-    private List<Comment> comments;
 
     @ManyToOne
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 
-    public String getTitle() {
-        return title;
+    public Project getProject() {
+        return project;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     public void setCreationDate(Date creationDate) {
@@ -70,11 +58,4 @@ public class Ticket {
         this.status = status;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
 }

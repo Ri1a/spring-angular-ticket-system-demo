@@ -3,8 +3,10 @@ package ch.fhnw.webec.exercise.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.util.List;
+
 @Entity
-public class Comment {
+public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
@@ -13,8 +15,8 @@ public class Comment {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String text;
 
-    @ManyToOne
-    private Ticket ticket;
+    @OneToMany(mappedBy="project", cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
 
     @ManyToOne
     private User user;
@@ -35,12 +37,12 @@ public class Comment {
         this.text = text;
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public List<Ticket> getTickets() {
+        return tickets;
     }
 
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
     public User getUser() {

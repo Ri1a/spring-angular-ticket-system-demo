@@ -31,7 +31,7 @@ public class LoginController {
         if (user != null && user.getPassword().equals(password)) {
             String token = jwtService.generateToken(user);
 
-            return ResponseEntity.ok("Bearer " + token + " {\"admin\": \"" + user.getAuthorities() + "\"}");
+            return ResponseEntity.ok("Bearer " + token);
         } else {
             return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)

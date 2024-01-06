@@ -67,5 +67,17 @@ public class UserUnitTest {
         assertTrue(user.getTickets().contains(ticket1));
         assertTrue(user.getTickets().contains(ticket2));
     }
+
+    @Test
+    void testUserProjectsRelation() {
+        User user = new User();
+        Project project1 = new Project();
+        Project project2 = new Project();
+
+        user.setProjects(List.of(project1, project2));
+
+        assertEquals("User should have 2 projects",2, user.getProjects().size());
+    }
+
 }
 

@@ -9,7 +9,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @SpringBootTest
@@ -48,15 +47,13 @@ class TicketUnitTest {
     }
 
     @Test
-    void testCommentsRelation() {
-        Ticket ticket = new Ticket();
-        Comment comment1 = new Comment();
-        Comment comment2 = new Comment();
+    void testProjectTicketsRelation() {
+        Project project = new Project();
+        Ticket ticket1 = new Ticket();
+        Ticket ticket2 = new Ticket();
 
-        ticket.setComments(List.of(comment1, comment2));
+        project.setTickets(List.of(ticket1, ticket2));
 
-        assertEquals("", 2, ticket.getComments().size());
-        assertTrue(ticket.getComments().contains(comment1));
-        assertTrue(ticket.getComments().contains(comment2));
+        assertEquals("User should have 2 projects",2, project.getTickets().size());
     }
 }

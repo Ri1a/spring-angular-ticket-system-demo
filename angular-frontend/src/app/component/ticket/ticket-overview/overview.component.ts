@@ -5,6 +5,9 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag
 import {MatDialog} from "@angular/material/dialog";
 import {NewTicketComponent} from "../new-ticket/new-ticket.component";
 import {User} from "../../../models/user";
+import {ProjectService} from "../../../services/project.service";
+import {ActivatedRoute} from "@angular/router";
+import {Project} from "../../../models/project";
 
 
 @Component({
@@ -25,26 +28,44 @@ export class OverviewComponent implements OnInit {
 
   userList: User[] = [];
 
+  project: Project = new Project();
+  projectId: string = "";
+
   currentMovedTicketId: string = "";
   currentMovedTicket?: Tickets;
 
   constructor(private ticketService: TicketService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog, private projectService: ProjectService, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.loadAllTickets();
-  }
-
-
-  loadAllTickets(): void {
-    this.ticketService.getAllTickets().subscribe(result => {
-      this.ticketListOpen = result.filter(x => x.status === "OPEN");
-      this.ticketListProcess = result.filter(x => x.status === "INPROGRESS");
-      this.ticketListReview = result.filter(x => x.status === "REVIEW");
-      this.ticketListDone = result.filter(x => x.status === "DONE");
+    this.activatedRoute.params.subscribe(params => {
+      this.projectId = params['id'];
     });
+    this.loadProjectTickets();
+    //this.loadAllTickets();
   }
+
+  loadProjectTickets(): void {
+    this.projectService.showProject(this.projectId).subscribe(project => {
+      this.project = project;
+    });
+      this.ticketListOpen = this.project.tickets.filter(x => x.status === "OPEN");
+      this.ticketListProcess = this.project.tickets.filter(x => x.status === "INPROGRESS");
+      this.ticketListReview = this.project.tickets.filter(x => x.status === "REVIEW");
+      this.ticketListDone = this.project.tickets.filter(x => x.status === "DONE");
+
+  }
+
+
+  // loadAllTickets(): void {
+  //   this.ticketService.getAllTickets().subscribe(result => {
+  //     this.ticketListOpen = result.filter(x => x.status === "OPEN");
+  //     this.ticketListProcess = result.filter(x => x.status === "INPROGRESS");
+  //     this.ticketListReview = result.filter(x => x.status === "REVIEW");
+  //     this.ticketListDone = result.filter(x => x.status === "DONE");
+  //   });
+  // }
 
   getCurrentTicket(ticket: Tickets): void{
     this.currentMovedTicketId = ticket.id;
@@ -60,7 +81,7 @@ export class OverviewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(
-      () =>   this.loadAllTickets()
+      () =>   this.loadProjectTickets()
     );
   }
 
@@ -73,7 +94,7 @@ export class OverviewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(
-      () =>   this.loadAllTickets()
+      () =>   this.loadProjectTickets()
     );
   }
 
@@ -96,7 +117,7 @@ export class OverviewComponent implements OnInit {
 
   deleteTicket(ticket_id: string) {
     this.ticketService.deleteTicket(ticket_id).subscribe(result => {
-      this.loadAllTickets();
+      this.loadProjectTickets();
     })
   }
 }

@@ -2,6 +2,9 @@
 
 ## Project
 
+Java 21
+Gradle 8.5
+
 ### Team members
 
 Riccardo Landolfo (riccardo.landolfo@students.fhnw.ch)
@@ -23,6 +26,8 @@ Install the npm packages with `npm install`
 Start the frontend with `npm start`
 
 Start the Spring backend
+
+Navigate to `http://localhost:4200/` and log in with `admin:admin`.
 
 Admin login:
 ```

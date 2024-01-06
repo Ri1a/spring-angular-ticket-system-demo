@@ -6,9 +6,30 @@
 
 .addNewProjectText {
   font-family: Roboto;
-  margin-right: 150px;
+  margin-left: 150px;
 }
 
 .addNewProjectButton {
   margin: 10px;
+}
+
+.example-card {
+  max-width: 400px;
+  margin-left: 150px;
+  margin-top: 10px;
+  border-top-style: solid;
+  border-top-color: #3F51B5;
+  background-color: white;
+}
+
+.viewButton {
+  margin: 2px;
+}
+
+.editButton {
+  margin: 2px;
+}
+
+.deleteButton {
+  margin: 2px;
 }

@@ -3,9 +3,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {NewProjectComponent} from "../new-project/new-project.component";
 import {Project} from "../../../models/project";
 import {ProjectService} from "../../../services/project.service";
-import {User} from "../../../models/user";
-import {Tickets} from "../../../models/tickets";
-import {NewTicketComponent} from "../../ticket/new-ticket/new-ticket.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-project',
@@ -16,7 +14,7 @@ export class ProjectComponent implements OnInit {
 
   projectList: Project[] = [];
 
-  constructor(private projectService: ProjectService, public dialog: MatDialog) {
+  constructor(private projectService: ProjectService, public dialog: MatDialog, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -49,9 +47,16 @@ export class ProjectComponent implements OnInit {
     );
   }
 
-  loadAllProjects(): void {}
+  loadAllProjects(): void {
+    this.projectService.getAllProjects().subscribe(result => {
+      this.projectList = result;
+    });
+  }
 
-  showTicketOverview(project: Project): void {}
+  showTicketOverview(project: Project): void {
+    this.router.navigate(['/overview', project.id])
+
+  }
 
   deleteProject(projectId: string) {
     this.projectService.deleteProject(projectId).subscribe(result => {

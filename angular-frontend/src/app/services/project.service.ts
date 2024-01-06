@@ -16,6 +16,10 @@ export class ProjectService {
     return this.httpClient.get<Array<Project>>(this.REST_API_SERVER, {});
   }
 
+  public showProject(projectId: String): Observable<Project> {
+    return this.httpClient.get<Project>(this.REST_API_SERVER + '/' + projectId, {});
+  }
+
   public addProject(project: Project): Observable<Project> {
     return this.httpClient.post<Project>(
       this.REST_API_SERVER + '/add',

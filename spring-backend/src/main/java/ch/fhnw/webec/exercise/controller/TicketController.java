@@ -48,6 +48,9 @@ public class TicketController {
         try {
             return ticketRepository.save(ticket);
         } catch (Exception e) {
+            if(ticketRepository.existsByTitle(ticket.getTitle())) {
+                throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Ticket with title " + ticket.getTitle() + " already exists.");
+            }
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error creating ticket.");
         }
     }

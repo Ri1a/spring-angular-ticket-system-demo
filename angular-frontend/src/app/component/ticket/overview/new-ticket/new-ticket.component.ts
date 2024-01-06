@@ -5,6 +5,7 @@ import { TicketService } from '../../../../services/ticket.service';
 import { User } from '../../../../models/user';
 import { UserService } from '../../../../services/user.service';
 import { Observable } from 'rxjs';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-ticket',
@@ -13,6 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class NewTicketComponent implements OnInit {
   ticket: Tickets = new Tickets();
+  ticketForm!: FormGroup;
 
   constructor(
     private ticketService: TicketService,
@@ -25,7 +27,13 @@ export class NewTicketComponent implements OnInit {
 
   statusArrayList: string[] = ['OPEN', 'INPROGRESS', 'REVIEW', 'DONE'];
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.ticketForm = new FormGroup({
+      title: new FormControl('', Validators.required),
+      description: new FormControl(''),
+      status: new FormControl(''),
+    });
+  }
 
   onDialogSave(title: string, description: string, status: string) {
     if (this.ticket.id == null || this.ticket.id == '') {

@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { NewTicketComponent } from './component/ticket/overview/new-ticket/new-ticket.component';
+import { NewTicketComponent } from './component/ticket/new-ticket/new-ticket.component';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { OverviewComponent } from './component/ticket/overview/overview/overview.component';
+import { OverviewComponent } from './component/ticket/ticket-overview/overview.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatSliderModule } from '@angular/material/slider';
@@ -34,6 +34,8 @@ import { NewUserComponent } from './component/new-user/new-user.component';
 import { BasicAuthInterceptorService } from './services/basic-auth-interceptor.service';
 import { AboutComponent } from './component/about/about.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ProjectComponent} from "./component/project/project-overview/project.component";
+import { NewProjectComponent } from './component/project/new-project/new-project.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     SettingsComponent,
     NewUserComponent,
     AboutComponent,
+    ProjectComponent,
+    NewProjectComponent,
   ],
   imports: [
     BrowserModule,

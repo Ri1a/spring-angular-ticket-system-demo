@@ -1,10 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Tickets } from '../../../../models/tickets';
-import { TicketService } from '../../../../services/ticket.service';
-import { User } from '../../../../models/user';
-import { UserService } from '../../../../services/user.service';
-import { Observable } from 'rxjs';
+import { Tickets } from '../../../models/tickets';
+import { TicketService } from '../../../services/ticket.service';
+import { UserService } from '../../../services/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({

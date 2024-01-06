@@ -1,0 +1,34 @@
+.h1-title {
+  color: #3F51B5;
+  font-family: Roboto;
+}
+
+.saveButton {
+  background-color: #3F51B5;
+  color: white;
+  float:right;
+  margin: 10px;
+}
+
+.closeButton {
+  float: right;
+  margin: 10px;
+}
+
+.close {
+  float: right;
+}
+
+.cdk-overlay-pane.my-dialog {
+  position: relative!important;
+}
+
+.mat-dialog-container {
+  position: relative;
+  overflow: auto;
+}
+
+.mat-form-field {
+  width: 100%;
+  max-width: 450px;
+}

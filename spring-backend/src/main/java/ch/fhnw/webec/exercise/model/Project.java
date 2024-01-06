@@ -16,6 +16,16 @@ public class Project {
     @ManyToOne
     private User user;
 
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getId() {
         return id;
     }
@@ -23,7 +33,6 @@ public class Project {
     public void setId(String id) {
         this.id = id;
     }
-
 
     public List<Ticket> getTickets() {
         return tickets;

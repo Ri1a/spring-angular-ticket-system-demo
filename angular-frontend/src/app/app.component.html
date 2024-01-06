@@ -8,10 +8,14 @@
     </mat-menu>
     <span>Ticketing System</span>
     <span class="example-spacer"></span>
-    <button *ngIf="this.isUserLoggedIn" class="logoutbutton" mat-button (click)="logoutUser()" routerLink="/login">Logout</button>
+    <button *ngIf="this.isUserLoggedIn; else loginBlock" class="logoutbutton" mat-button (click)="logoutUser()"
+      routerLink="/login">Logout</button>
+
+    <ng-template #loginBlock>
+      <button class="loginbutton" mat-button routerLink="/login">Login</button>
+    </ng-template>
   </mat-toolbar>
 </p>
-
 <router-outlet></router-outlet>
 
 

@@ -1,5 +1,6 @@
 package ch.fhnw.webec.exercise.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -33,6 +34,7 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "project_id")
+    @JsonBackReference
     private Project project;
 
     public Project getProject() {

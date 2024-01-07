@@ -1,7 +1,9 @@
 package ch.fhnw.webec.exercise.controller;
 
+import ch.fhnw.webec.exercise.model.Project;
 import ch.fhnw.webec.exercise.model.StatusEnum;
 import ch.fhnw.webec.exercise.model.Ticket;
+import ch.fhnw.webec.exercise.repository.ProjectRepository;
 import ch.fhnw.webec.exercise.repository.TicketRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,9 +24,11 @@ import java.util.UUID;
 public class TicketController {
 
     private final TicketRepository ticketRepository;
+    private final ProjectRepository projectRepository;
 
-    public TicketController(TicketRepository ticketRepository) {
+    public TicketController(TicketRepository ticketRepository, ProjectRepository projectRepository) {
         this.ticketRepository = ticketRepository;
+        this.projectRepository = projectRepository;
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
@@ -43,6 +47,11 @@ public class TicketController {
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/add")
     public Ticket addTicket(@Valid @RequestBody Ticket ticket) {
+        if (ticket.getProject() != null && ticket.getProject().getId() != null) {
+            Project project = projectRepository.findById(ticket.getProject().getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found."));
+            ticket.setProject(project);
+        }
         ticket.setId(UUID.randomUUID().toString());
         ticket.setCreationDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         try {

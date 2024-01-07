@@ -1,5 +1,6 @@
 package ch.fhnw.webec.exercise.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -10,6 +11,7 @@ public class Project {
     private String id;
 
     @OneToMany(mappedBy="project", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Ticket> tickets;
 
     @ManyToOne

@@ -12,6 +12,7 @@ import { User } from '../../../models/user';
 import { ProjectService } from '../../../services/project.service';
 import { ActivatedRoute } from '@angular/router';
 import { Project } from '../../../models/project';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-overview',
@@ -37,19 +38,40 @@ export class OverviewComponent implements OnInit {
   currentMovedTicketId: string = '';
   currentMovedTicket?: Tickets;
 
+  layoutMode: string = 'four-columns';
+
   constructor(
     private ticketService: TicketService,
     public dialog: MatDialog,
     private projectService: ProjectService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {
+    this.breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge
+      ])
+      .subscribe(result => {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.layoutMode = 'one-column';
+        } else if (result.breakpoints[Breakpoints.Small]) {
+          this.layoutMode = 'two-columns';
+        } else if (result.breakpoints[Breakpoints.Medium]) {
+          this.layoutMode = 'two-columns';
+        } else {
+          this.layoutMode = 'four-columns';
+        }
+      });
     this.activatedRoute.params.subscribe((params) => {
       this.projectId = params['id'];
     });
     this.loadProjectTickets();
-    //this.loadAllTickets();
   }
 
   loadProjectTickets(): void {
@@ -65,15 +87,6 @@ export class OverviewComponent implements OnInit {
       this.ticketListDone = project.tickets.filter((x) => x.status === 'DONE');
     });
   }
-
-  // loadAllTickets(): void {
-  //   this.ticketService.getAllTickets().subscribe(result => {
-  //     this.ticketListOpen = result.filter(x => x.status === "OPEN");
-  //     this.ticketListProcess = result.filter(x => x.status === "INPROGRESS");
-  //     this.ticketListReview = result.filter(x => x.status === "REVIEW");
-  //     this.ticketListDone = result.filter(x => x.status === "DONE");
-  //   });
-  // }
 
   getCurrentTicket(ticket: Tickets): void {
     this.currentMovedTicketId = ticket.id;

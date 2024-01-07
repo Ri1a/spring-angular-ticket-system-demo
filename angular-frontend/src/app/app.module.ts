@@ -36,6 +36,7 @@ import { AboutComponent } from './component/about/about.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ProjectComponent} from "./component/project/project-overview/project.component";
 import { NewProjectComponent } from './component/project/new-project/new-project.component';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { NewProjectComponent } from './component/project/new-project/new-project
     RouterModule.forRoot([]),
     AppRoutingModule,
     MatTabsModule,
+    LayoutModule,
   ],
   providers: [
     {

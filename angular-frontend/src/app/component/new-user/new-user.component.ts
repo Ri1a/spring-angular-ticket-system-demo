@@ -17,19 +17,20 @@ export class NewUserComponent implements OnInit {
   constructor(
     private userService: UserService,
     public dialogRef: MatDialogRef<NewUserComponent>,
-    @Inject(MAT_DIALOG_DATA) data: User
+    @Inject(MAT_DIALOG_DATA) public data: User
   ) {
-    this.user = data;
+    this.user = data ? { ...data } : new User();
     this.userForm = new FormGroup({
       username: new FormControl(this.user.username, [Validators.required]),
       password: new FormControl(this.user.password, [
         Validators.required,
         Validators.minLength(6),
       ]),
-      role: new FormControl('ROLE_USER'),
+      role: new FormControl(
+        this.user.authorities ? this.user.authorities[0] : 'ROLE_USER'
+      ),
     });
   }
-
   ngOnInit(): void {}
 
   onDialogSave(): void {

@@ -1,21 +1,25 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
-import {NewProjectComponent} from "../new-project/new-project.component";
-import {Project} from "../../../models/project";
-import {ProjectService} from "../../../services/project.service";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { NewProjectComponent } from '../new-project/new-project.component';
+import { Project } from '../../../models/project';
+import { ProjectService } from '../../../services/project.service';
+import { Router } from '@angular/router';
+import { NewTicketComponent } from '../../ticket/new-ticket/new-ticket.component';
+import { OverviewComponent } from '../../ticket/ticket-overview/overview.component';
 
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
-  styleUrl: './project.component.css'
+  styleUrl: './project.component.css',
 })
 export class ProjectComponent implements OnInit {
-
   projectList: Project[] = [];
 
-  constructor(private projectService: ProjectService, public dialog: MatDialog, private router: Router) {
-  }
+  constructor(
+    private projectService: ProjectService,
+    public dialog: MatDialog,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadAllProjects();
@@ -29,9 +33,7 @@ export class ProjectComponent implements OnInit {
       data: new Project(),
     });
 
-    dialogRef.afterClosed().subscribe(
-      () =>   this.loadAllProjects()
-    );
+    dialogRef.afterClosed().subscribe(() => this.loadAllProjects());
   }
 
   openDialogEdit(project: Project) {
@@ -39,29 +41,25 @@ export class ProjectComponent implements OnInit {
       width: '500px',
       height: '450px',
       panelClass: 'my-dialog',
-      data: project
+      data: project,
     });
 
-    dialogRef.afterClosed().subscribe(
-      () =>   this.loadAllProjects()
-    );
+    dialogRef.afterClosed().subscribe(() => this.loadAllProjects());
   }
 
   loadAllProjects(): void {
-    this.projectService.getAllProjects().subscribe(result => {
+    this.projectService.getAllProjects().subscribe((result) => {
       this.projectList = result;
     });
   }
 
   showTicketOverview(project: Project): void {
-    this.router.navigate(['/overview', project.id])
-
+    this.router.navigate(['/overview', project.id]);
   }
 
   deleteProject(projectId: string) {
-    this.projectService.deleteProject(projectId).subscribe(result => {
+    this.projectService.deleteProject(projectId).subscribe((result) => {
       this.loadAllProjects();
-    })
+    });
   }
-
 }

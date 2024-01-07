@@ -4,6 +4,7 @@ import { Tickets } from '../../../models/tickets';
 import { TicketService } from '../../../services/ticket.service';
 import { UserService } from '../../../services/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Project } from '../../../models/project';
 
 @Component({
   selector: 'app-new-ticket',
@@ -18,9 +19,19 @@ export class NewTicketComponent implements OnInit {
     private ticketService: TicketService,
     public dialogRef: MatDialogRef<NewTicketComponent>,
     public userService: UserService,
-    @Inject(MAT_DIALOG_DATA) data: Tickets
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.ticket = data;
+    if (data.ticket) {
+      this.ticket = data.ticket;
+    } else {
+      this.ticket.project = new Project();
+    }
+    if (data.project_id) {
+      if (!this.ticket.project) {
+        this.ticket.project = new Project();
+      }
+      this.ticket.project.id = data.project_id;
+    }
   }
 
   statusArrayList: string[] = ['OPEN', 'INPROGRESS', 'REVIEW', 'DONE'];
@@ -34,12 +45,17 @@ export class NewTicketComponent implements OnInit {
   }
 
   onDialogSave(title: string, description: string, status: string) {
+    this.ticket.title = title;
+    this.ticket.description = description;
+    this.ticket.status = status;
+
+    if (!this.ticket.project || this.data.project_id) {
+      this.ticket.project = new Project();
+      this.ticket.project.id = this.data.project_id;
+    }
+
     if (this.ticket.id == null || this.ticket.id == '') {
-      let ticket = new Tickets();
-      ticket.title = title;
-      ticket.description = description;
-      ticket.status = status;
-      this.ticketService.addTicket(ticket).subscribe((result) => {
+      this.ticketService.addTicket(this.ticket).subscribe((result) => {
         if (result) {
           this.dialogRef.close();
         }

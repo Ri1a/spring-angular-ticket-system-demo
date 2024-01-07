@@ -1,19 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {TicketService} from "../../../services/ticket.service";
-import {Tickets} from "../../../models/tickets";
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
-import {MatDialog} from "@angular/material/dialog";
-import {NewTicketComponent} from "../new-ticket/new-ticket.component";
-import {User} from "../../../models/user";
-import {ProjectService} from "../../../services/project.service";
-import {ActivatedRoute} from "@angular/router";
-import {Project} from "../../../models/project";
-
+import { Component, OnInit } from '@angular/core';
+import { TicketService } from '../../../services/ticket.service';
+import { Tickets } from '../../../models/tickets';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import { MatDialog } from '@angular/material/dialog';
+import { NewTicketComponent } from '../new-ticket/new-ticket.component';
+import { User } from '../../../models/user';
+import { ProjectService } from '../../../services/project.service';
+import { ActivatedRoute } from '@angular/router';
+import { Project } from '../../../models/project';
 
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrl: './overview.component.css'
+  styleUrl: './overview.component.css',
 })
 export class OverviewComponent implements OnInit {
   ticketListOpen: Tickets[] = [];
@@ -21,25 +24,28 @@ export class OverviewComponent implements OnInit {
   ticketListReview: Tickets[] = [];
   ticketListDone: Tickets[] = [];
 
-  OPEN: string = "Open";
-  INPROGRESS: string = "In Progress";
-  REVIEW: string = "Review";
-  DONE: string = "Done";
+  OPEN: string = 'Open';
+  INPROGRESS: string = 'In Progress';
+  REVIEW: string = 'Review';
+  DONE: string = 'Done';
 
   userList: User[] = [];
 
   project: Project = new Project();
-  projectId: string = "";
+  projectId: string = '';
 
-  currentMovedTicketId: string = "";
+  currentMovedTicketId: string = '';
   currentMovedTicket?: Tickets;
 
-  constructor(private ticketService: TicketService,
-              public dialog: MatDialog, private projectService: ProjectService, private activatedRoute: ActivatedRoute) {
-  }
+  constructor(
+    private ticketService: TicketService,
+    public dialog: MatDialog,
+    private projectService: ProjectService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.subscribe((params) => {
       this.projectId = params['id'];
     });
     this.loadProjectTickets();
@@ -47,16 +53,18 @@ export class OverviewComponent implements OnInit {
   }
 
   loadProjectTickets(): void {
-    this.projectService.showProject(this.projectId).subscribe(project => {
+    this.projectService.showProject(this.projectId).subscribe((project) => {
       this.project = project;
+      this.ticketListOpen = project.tickets.filter((x) => x.status === 'OPEN');
+      this.ticketListProcess = project.tickets.filter(
+        (x) => x.status === 'INPROGRESS'
+      );
+      this.ticketListReview = project.tickets.filter(
+        (x) => x.status === 'REVIEW'
+      );
+      this.ticketListDone = project.tickets.filter((x) => x.status === 'DONE');
     });
-      this.ticketListOpen = this.project.tickets.filter(x => x.status === "OPEN");
-      this.ticketListProcess = this.project.tickets.filter(x => x.status === "INPROGRESS");
-      this.ticketListReview = this.project.tickets.filter(x => x.status === "REVIEW");
-      this.ticketListDone = this.project.tickets.filter(x => x.status === "DONE");
-
   }
-
 
   // loadAllTickets(): void {
   //   this.ticketService.getAllTickets().subscribe(result => {
@@ -67,7 +75,7 @@ export class OverviewComponent implements OnInit {
   //   });
   // }
 
-  getCurrentTicket(ticket: Tickets): void{
+  getCurrentTicket(ticket: Tickets): void {
     this.currentMovedTicketId = ticket.id;
     this.currentMovedTicket = ticket;
   }
@@ -77,12 +85,10 @@ export class OverviewComponent implements OnInit {
       width: '500px',
       height: '450px',
       panelClass: 'my-dialog',
-      data: ticket
+      data: { ticket: ticket, project_id: this.projectId },
     });
 
-    dialogRef.afterClosed().subscribe(
-      () =>   this.loadProjectTickets()
-    );
+    dialogRef.afterClosed().subscribe(() => this.loadProjectTickets());
   }
 
   openDialogNewTicket() {
@@ -90,34 +96,43 @@ export class OverviewComponent implements OnInit {
       width: '500px',
       height: '450px',
       panelClass: 'my-dialog',
-      data: new Tickets(),
+      data: { project_id: this.projectId },
     });
 
-    dialogRef.afterClosed().subscribe(
-      () =>   this.loadProjectTickets()
-    );
+    dialogRef.afterClosed().subscribe(() => this.loadProjectTickets());
   }
 
   drop(event: CdkDragDrop<Tickets[], any>) {
-    if(event.container.id != undefined) {
-      if(this.currentMovedTicket != null && this.currentMovedTicket != undefined) {
+    if (event.container.id != undefined) {
+      if (
+        this.currentMovedTicket != null &&
+        this.currentMovedTicket != undefined
+      ) {
         this.currentMovedTicket.status = event.container.id;
-        this.ticketService.updateTicket(this.currentMovedTicket).subscribe(result => console.log(result));
+        this.ticketService
+          .updateTicket(this.currentMovedTicket)
+          .subscribe((result) => console.log(result));
       }
     }
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
+      moveItemInArray(
         event.container.data,
         event.previousIndex,
-        event.currentIndex);
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     }
   }
 
   deleteTicket(ticket_id: string) {
-    this.ticketService.deleteTicket(ticket_id).subscribe(result => {
+    this.ticketService.deleteTicket(ticket_id).subscribe((result) => {
       this.loadProjectTickets();
-    })
+    });
   }
 }

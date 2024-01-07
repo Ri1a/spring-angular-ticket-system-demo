@@ -1,3 +1,5 @@
+import { Project } from './project';
+
 export class Tickets {
   public id: string = '';
   public title: string = '';
@@ -6,4 +8,5 @@ export class Tickets {
   public status: string = '';
   public user_id: string = '';
   public user: string = '';
+  public project?: Project;
 }

@@ -2,7 +2,6 @@
   <mat-toolbar color="primary">
     <button *ngIf="this.isUserLoggedIn" mat-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink="/overview">Overview</button>
       <button mat-menu-item routerLink="/project">Projects</button>
       <button *ngIf="isAdminUser" mat-menu-item routerLink="/settings">Settings</button>
       <button mat-menu-item routerLink="/about">About</button>

@@ -3,6 +3,7 @@ import { User } from '../../models/user';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
 import { NewUserComponent } from '../new-user/new-user.component';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-settings',
@@ -13,9 +14,17 @@ export class SettingsComponent implements OnInit {
   userRoleAdmin: User[] = [];
   userRoleNormal: User[] = [];
 
-  constructor(private userService: UserService, public dialog: MatDialog) {}
+  isSmallScreen: boolean = false;
+
+  constructor(private userService: UserService, public dialog: MatDialog,
+              private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall
+    ]).subscribe(result => {
+      this.isSmallScreen = result.matches;
+    });
     this.loadAllUser();
   }
 

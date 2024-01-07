@@ -1,45 +1,51 @@
 <h1 class="title">Settings</h1>
 
-<h2 class="addNewUserText">Add new user
-  <button class="addNewUserButton" mat-mini-fab color="primary" (click)="openDialogNewUser()">
-    <mat-icon>add</mat-icon>
-  </button>
-</h2>
+<div class="settings-container">
+  <div class="addNewUserContainer">
+    <h2 class="addNewUserText">Add new user</h2>
+    <button class="addNewUserButton" mat-mini-fab color="primary" (click)="openDialogNewUser()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <div class="user-sections" [class.small-screen]="isSmallScreen">
+    <div class="admin-users">
+      <h2 class="titlerole">Admin Users</h2>
 
-<h2 class="titlerole">Admin Users</h2>
+      <div *ngFor="let user of userRoleAdmin">
+        <mat-card class="mat-card">
+          <mat-card-header class="mat-card-header">
+            <mat-card-title class="mat-card-title">{{user.username}}</mat-card-title>
+            <mat-card-subtitle class="mat-card-subtitle">{{user.password}}</mat-card-subtitle>
+            <mat-card-subtitle class="mat-card-subtitle">
+              {{ 'Role: ' + getRole(user) }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions class="mat-card-actions">
+            <button mat-raised-button class="editButton" (click)="openDialogEdit(user)"><mat-icon class="icon">edit</mat-icon></button>
+            <button mat-raised-button class="deleteButton" (click)="deleteUser(user.id)"><mat-icon class="icon">delete</mat-icon></button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
 
-<div *ngFor="let user of userRoleAdmin">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>{{user.username}}</mat-card-title>
-      <mat-card-subtitle>{{user.password}}</mat-card-subtitle>
-      <mat-card-subtitle>
-        {{ 'Role: ' + getRole(user) }}
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-actions align="end">
-      <button mat-button (click)="openDialogEdit(user)"><mat-icon>edit</mat-icon></button>
-      <button class="deleteButton" (click)="deleteUser(user.id)" mat-stroked-button><mat-icon>delete</mat-icon></button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+    <div class="normal-users">
+      <h2 class="titlerole2">Normal Users</h2>
 
-<h2 class="titlerole2">Normal Users</h2>
-
-<div *ngFor="let user of userRoleNormal">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>{{user.username}}</mat-card-title>
-      <mat-card-subtitle>{{user.password}}</mat-card-subtitle>
-      <mat-card-subtitle>
-        {{ 'Role: ' + getRole(user) }}
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-actions align="end">
-      <button mat-button (click)="openDialogEdit(user)"><mat-icon>edit</mat-icon></button>
-      <button class="deleteButton" (click)="deleteUser(user.id)" mat-stroked-button><mat-icon>delete</mat-icon></button>
-    </mat-card-actions>
-  </mat-card>
+      <div *ngFor="let user of userRoleNormal">
+        <mat-card class="mat-card">
+          <mat-card-header class="mat-card-header">
+            <mat-card-title class="mat-card-title">{{user.username}}</mat-card-title>
+            <mat-card-subtitle class="mat-card-subtitle">{{user.password}}</mat-card-subtitle>
+            <mat-card-subtitle class="mat-card-subtitle">
+              {{ 'Role: ' + getRole(user) }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions class="mat-card-actions">
+            <button mat-raised-button class="editButton" (click)="openDialogEdit(user)"><mat-icon class="icon">edit</mat-icon></button>
+            <button mat-raised-button class="deleteButton" (click)="deleteUser(user.id)"><mat-icon class="icon">delete</mat-icon></button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
 </div>

@@ -4,62 +4,87 @@
   font-family: Roboto;
 }
 
-table {
-  width: 100%;
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
 }
 
-th {
-  text-align: left;
-}
-
-.example-card {
-  max-width: 400px;
-  margin-left: 150px;
-  margin-top: 10px;
-  border-top-style: solid;
-  border-top-color: #3F51B5;
-  background-color: white;
-}
-
-.example-header-image {
-  background-image: url('https://icons-for-free.com/download-icon-avatar+person+profile+user+icon-1320086059654790795_512.png');
-  background-size: cover;
-}
-
-.example-spacer {
-  flex: 1 1 auto;
-}
-
-.logoutbutton {
-  color: white;
-  font-family: Roboto;
+.addNewUserContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .addNewUserText {
   font-family: Roboto;
-  margin-left: 150px;
-
+  margin: 0;
 }
+
 .addNewUserButton {
+  margin-left: 10px;
+}
+
+.titlerole, .titlerole2 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.user-sections {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 800px;
+}
+
+.user-sections.small-screen {
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-users, .normal-users {
+  flex: 1;
   margin: 10px;
 }
 
-.titlerole {
-  color: black;
-  text-align: left;
-  font-family: Roboto;
-  margin-left: 150px;
+.mat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  width: 100%;
+  border-top-style: solid;
+  border-top-color: #3F51B5;
+  background-color: white;
+  margin-bottom: 20px;
+  padding: 10px;
 }
 
-.titlerole2 {
-  color: black;
-  text-align: left;
-  font-family: Roboto;
-  margin-left: 150px;
-  margin-top: 50px;
+.mat-card-header, .mat-card-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-.deleteButton {
-  size: 10px 10px;
+.mat-card-title, .mat-card-subtitle {
+  width: 100%;
 }
 
+.mat-card-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.editButton, .deleteButton, .icon {
+  margin: 2px 5px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}

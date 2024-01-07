@@ -7,7 +7,7 @@
       <button mat-menu-item routerLink="/about">About</button>
     </mat-menu>
     <span>Ticketing System</span>
-    <span class="example-spacer"></span>
+    <span class="spacer"></span>
     <button *ngIf="this.isUserLoggedIn; else loginBlock" class="logoutbutton" mat-button (click)="logoutUser()"
       routerLink="/login">Logout</button>
 

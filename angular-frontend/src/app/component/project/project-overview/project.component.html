@@ -1,22 +1,31 @@
 <h1 class="title">Projects Overview</h1>
 
-<h2 class="addNewProjectText">Add new project
+<div class="addNewProjectContainer">
+
+  <h2 class="addNewProjectText">Add new project</h2>
   <button class="addNewProjectButton" mat-mini-fab color="primary" (click)="openDialogNewProject()">
     <mat-icon>add</mat-icon>
   </button>
-</h2>
 
-<div *ngFor="let project of projectList">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <mat-card-title>{{project.title}}</mat-card-title>
-    </mat-card-header>
-    <mat-card-actions align="end">
-      <button mat-raised-button class="viewButton" (click)="showTicketOverview(project)"><mat-icon>pageview</mat-icon></button>
-      <button mat-raised-button class="editButton" (click)="openDialogEdit(project)"><mat-icon>edit</mat-icon></button>
-      <button mat-raised-button class="deleteButton" (click)="deleteProject(project.id)"><mat-icon>delete</mat-icon></button>
-    </mat-card-actions>
-  </mat-card>
 </div>
 
-
+<mat-grid-list class="mat-grid-list" [cols]="cols" rowHeight="2:1">
+  <mat-grid-tile *ngFor="let project of projectList">
+    <mat-card class="mat-card">
+      <mat-card-header>
+        <mat-card-title>{{project.title}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-actions>
+        <button mat-raised-button class="viewButton" (click)="showTicketOverview(project)">
+          <mat-icon class="icon">pageview</mat-icon>
+        </button>
+        <button mat-raised-button class="editButton" (click)="openDialogEdit(project)">
+          <mat-icon class="icon">edit</mat-icon>
+        </button>
+        <button mat-raised-button class="deleteButton" (click)="deleteProject(project.id)">
+          <mat-icon class="icon">delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

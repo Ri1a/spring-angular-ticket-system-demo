@@ -4,32 +4,36 @@
   font-family: Roboto;
 }
 
+.addNewProjectContainer {
+  display: flex;
+  justify-content: center;
+}
+
 .addNewProjectText {
   font-family: Roboto;
-  margin-left: 150px;
+  width: fit-content;
+  margin-top: 2px;
 }
 
 .addNewProjectButton {
-  margin: 10px;
+  margin-left: 10px;
 }
 
-.example-card {
+.mat-grid-list {
+  width: 100%;
+}
+
+.mat-card {
   max-width: 400px;
-  margin-left: 150px;
-  margin-top: 10px;
+  margin: 10px;
   border-top-style: solid;
   border-top-color: #3F51B5;
   background-color: white;
 }
 
-.viewButton {
+.viewButton, .editButton, .deleteButton, .icon {
   margin: 2px;
-}
-
-.editButton {
-  margin: 2px;
-}
-
-.deleteButton {
-  margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

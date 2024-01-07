@@ -71,6 +71,12 @@ public class TicketController {
         if (!ticketRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found.");
         }
+
+        if (ticket.getProject() != null && ticket.getProject().getId() != null) {
+            Project project = getProjectOrThrow(ticket.getProject().getId());
+            ticket.setProject(project);
+        }
+
         ticket.setCreationDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         try {
             return ticketRepository.save(ticket);
@@ -97,6 +103,12 @@ public class TicketController {
     public Ticket updateTicketStatus(@PathVariable String id, @RequestBody StatusEnum status) {
         Ticket ticket = ticketRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found."));
+
+        if (ticket.getProject() != null && ticket.getProject().getId() != null) {
+            Project project = getProjectOrThrow(ticket.getProject().getId());
+            ticket.setProject(project);
+        }
+
         ticket.setStatus(status);
         try {
             return ticketRepository.save(ticket);
@@ -108,5 +120,10 @@ public class TicketController {
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<Object> handleResponseStatusException(ResponseStatusException ex) {
         return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
+    }
+
+    private Project getProjectOrThrow(String projectId) {
+        return projectRepository.findById(projectId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found."));
     }
 }

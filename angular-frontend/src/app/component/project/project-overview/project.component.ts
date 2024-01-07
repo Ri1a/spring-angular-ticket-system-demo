@@ -60,6 +60,7 @@ export class ProjectComponent implements OnInit {
   deleteProject(projectId: string) {
     this.projectService.deleteProject(projectId).subscribe((result) => {
       this.loadAllProjects();
+      window.location.reload();
     });
   }
 }

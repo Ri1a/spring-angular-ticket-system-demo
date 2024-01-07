@@ -27,7 +27,9 @@ Start the frontend with `npm start`
 
 Start the Spring backend
 
-Navigate to `http://localhost:4200/` and log in with `admin:admin`.
+Navigate to `http://localhost:4200/` and log in with `admin:admin` or with `User 1:TestPassword1234`.
+
+The admin user is able to view the settings and add users, the normal user is only able to create projects and tickets.
 
 Admin login:
 ```

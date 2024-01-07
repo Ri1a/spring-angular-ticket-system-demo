@@ -1,25 +1,27 @@
 <div class="login-container">
   <form [formGroup]="loginForm">
     <mat-card class="card">
-      <mat-card-content>
+      <mat-card-content class="mat-card-content">
         <p>
-          <mat-form-field appearance="fill">
-            <mat-label>Enter your username</mat-label>
+          <mat-form-field class="mat-form-field" appearance="fill">
+            <mat-label>Enter username</mat-label>
             <input matInput formControlName="username" placeholder="Username">
+            <mat-icon class="icon">person</mat-icon>
             <mat-error *ngIf="loginForm.controls['username'].invalid">
               Username is required
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Enter your password</mat-label>
+          <mat-form-field class="mat-form-field" appearance="fill">
+            <mat-label>Enter password</mat-label>
             <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
+            <mat-icon class="icon">vpn_key</mat-icon>
             <mat-error *ngIf="loginForm.controls['password'].invalid">
               Password is required
             </mat-error>
           </mat-form-field>
         </p>
       </mat-card-content>
-      <mat-card-actions>
+      <mat-card-actions class="mat-card-action">
         <button (click)="logInUser()" class="logInButton" mat-raised-button color="primary">Log In</button>
       </mat-card-actions>
     </mat-card>

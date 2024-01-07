@@ -41,3 +41,8 @@
   width: 100%;
   max-width: 450px;
 }
+
+.error-message {
+  color: red;
+  margin: 10px 0;
+}

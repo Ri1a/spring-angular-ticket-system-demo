@@ -12,6 +12,7 @@ import { Project } from '../../../models/project';
   styleUrl: './new-ticket.component.css',
 })
 export class NewTicketComponent implements OnInit {
+  errorMessage: string | null = null;
   ticket: Tickets = new Tickets();
   ticketForm!: FormGroup;
 
@@ -67,6 +68,25 @@ export class NewTicketComponent implements OnInit {
         }
       });
     }
+
+    const ticketOperation = this.ticket.id
+      ? this.ticketService.updateTicket(this.ticket)
+      : this.ticketService.addTicket(this.ticket);
+
+    ticketOperation.subscribe({
+      next: (result) => {
+        if (result) {
+          this.dialogRef.close();
+        }
+      },
+      error: (err) => {
+        if (err.status === 422) {
+          this.errorMessage = err.error;
+        } else {
+          this.errorMessage = 'An unexpected error occurred.';
+        }
+      },
+    });
   }
 
   onDialogClose() {

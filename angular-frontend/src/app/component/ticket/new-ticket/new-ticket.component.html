@@ -35,6 +35,9 @@
     </mat-form-field>
   </p>
 
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
 
 </mat-dialog-content>
 

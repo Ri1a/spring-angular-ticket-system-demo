@@ -1,35 +1,3 @@
-Perfect — I’ll give you:
-
-1. ✅ A strong repository name
-2. ✅ A clean GitHub description
-3. ✅ A professional, portfolio-level README rewrite
-
----
-
-# ✅ Recommended Repository Name
-
-**`ticketing-system-demo`**
-
-Professional, honest, and portfolio-appropriate.
-
----
-
-# ✅ Short GitHub Description
-
-**Full-stack ticket management system built with Spring Boot, JWT authentication, and a responsive frontend.**
-
-Alternative (more backend-focused):
-
-**Spring Boot ticketing system with JWT authentication, role-based access control, and responsive UI.**
-
----
-
-# ✅ Professional Portfolio README
-
-Here is a cleaned-up and improved version of your README:
-
----
-
 # 🎫 Ticketing System Demo
 
 A full-stack ticket management application built to demonstrate secure authentication, role-based access control, and modern backend architecture using **Java 21** and **Spring Boot**.
@@ -42,13 +10,13 @@ This project showcases a complete issue tracking workflow, including ticket life
 
 ## 🚀 Features
 
-* Create, update, and delete tickets
-* Comment system per ticket
-* Ticket status management (Open, In Progress, Closed)
-* Role-based access control (Admin / User)
-* JWT Authentication with Spring Security
-* Responsive and modern frontend design
-* RESTful API architecture
+- Create, update, and delete tickets
+- Comment system per ticket
+- Ticket status management (Open, In Progress, Closed)
+- Role-based access control (Admin / User)
+- JWT Authentication with Spring Security
+- Responsive and modern frontend design
+- RESTful API architecture
 
 ---
 
@@ -56,16 +24,16 @@ This project showcases a complete issue tracking workflow, including ticket life
 
 ### Backend
 
-* Java 21
-* Spring Boot
-* Spring Security
-* JWT Authentication
-* Gradle 8.5
+- Java 21
+- Spring Boot
+- Spring Security
+- JWT Authentication
+- Gradle 8.5
 
 ### Frontend
 
-* Angular (served on port 4200)
-* Responsive UI design
+- Angular (served on port 4200)
+- Responsive UI design
 
 ---
 
@@ -73,14 +41,14 @@ This project showcases a complete issue tracking workflow, including ticket life
 
 ### Admin
 
-* View system settings
-* Manage users
-* Create projects and tickets
+- View system settings
+- Manage users
+- Create projects and tickets
 
 ### User
 
-* Create projects
-* Create and manage tickets
+- Create projects
+- Create and manage tickets
 
 ---
 
@@ -166,10 +134,10 @@ password: TestPassword1234
 
 ## 📂 Project Structure
 
-* `backend/` – Spring Boot REST API
-* `frontend/` – Angular application
-* JWT-based authentication layer
-* Role-based authorization
+- `backend/` – Spring Boot REST API
+- `frontend/` – Angular application
+- JWT-based authentication layer
+- Role-based authorization
 
 ---
 
@@ -185,9 +153,9 @@ Dobrawa Kiefer
 
 # 🎯 What This Project Demonstrates
 
-* Secure REST API design
-* Stateless authentication with JWT
-* Role-based authorization
-* Clean separation between frontend and backend
-* Modern Java backend architecture
-* Responsive UI integration
+- Secure REST API design
+- Stateless authentication with JWT
+- Role-based authorization
+- Clean separation between frontend and backend
+- Modern Java backend architecture
+- Responsive UI integration

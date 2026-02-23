@@ -1,55 +1,193 @@
-# webeC - Graded Exercise
+Perfect — I’ll give you:
 
-## Project
+1. ✅ A strong repository name
+2. ✅ A clean GitHub description
+3. ✅ A professional, portfolio-level README rewrite
 
-Java 21
-Gradle 8.5
+---
 
-### Team members
+# ✅ Recommended Repository Name
 
-Riccardo Landolfo (riccardo.landolfo@students.fhnw.ch)
-Dobrawa Kiefer (dobrawa.kiefer@students.fhnw.ch)
+**`ticketing-system-demo`**
 
-### Description
+Professional, honest, and portfolio-appropriate.
 
-This project outlines the development of a ticketing application, designed to streamline issue tracking and resolution processes. The app allows users to create, update, and delete tickets, each representing a specific issue or task. A key feature of the app is the ability to add comments to tickets. Each ticket can be assigned different statuses, reflecting its current stage in the resolution process, such as "Open," "In Progress," or "Closed." The application is built with a sophisticated and responsive design, ensuring a seamless user experience across various devices.
+---
 
-### Individual
+# ✅ Short GitHub Description
 
-- Sophisticated and Responsive Design
-- Authentication & Authorization with JWT and Spring Security
+**Full-stack ticket management system built with Spring Boot, JWT authentication, and a responsive frontend.**
 
-## Installation and run instructions
+Alternative (more backend-focused):
 
-Install the npm packages with `npm install`
+**Spring Boot ticketing system with JWT authentication, role-based access control, and responsive UI.**
 
-Start the frontend with `npm start`
+---
 
-Start the Spring backend
+# ✅ Professional Portfolio README
 
-Navigate to `http://localhost:4200/` and log in with `admin:admin` or with `User 1:TestPassword1234`.
+Here is a cleaned-up and improved version of your README:
 
-The admin user is able to view the settings and add users, the normal user is only able to create projects and tickets.
+---
 
-Admin login:
-```
+# 🎫 Ticketing System Demo
+
+A full-stack ticket management application built to demonstrate secure authentication, role-based access control, and modern backend architecture using **Java 21** and **Spring Boot**.
+
+This project showcases a complete issue tracking workflow, including ticket lifecycle management, user roles, and JWT-based authentication.
+
+> ⚠️ This project is intended for demonstration and portfolio purposes only.
+
+---
+
+## 🚀 Features
+
+* Create, update, and delete tickets
+* Comment system per ticket
+* Ticket status management (Open, In Progress, Closed)
+* Role-based access control (Admin / User)
+* JWT Authentication with Spring Security
+* Responsive and modern frontend design
+* RESTful API architecture
+
+---
+
+## 🛠 Tech Stack
+
+### Backend
+
+* Java 21
+* Spring Boot
+* Spring Security
+* JWT Authentication
+* Gradle 8.5
+
+### Frontend
+
+* Angular (served on port 4200)
+* Responsive UI design
+
+---
+
+## 👥 Roles & Permissions
+
+### Admin
+
+* View system settings
+* Manage users
+* Create projects and tickets
+
+### User
+
+* Create projects
+* Create and manage tickets
+
+---
+
+## 🔐 Authentication
+
+JWT-based authentication via Spring Security.
+
+### Example Login Request
+
+```bash
 curl -X POST http://localhost:8080/api/login \
 -d "username=admin&password=admin" -v
 ```
 
-List users:
-```
-curl -X GET http://localhost:8080/api/users -H "Authorization: Bearer <TOKEN>" -v
+### Access Protected Endpoint
+
+```bash
+curl -X GET http://localhost:8080/api/users \
+-H "Authorization: Bearer <TOKEN>" -v
 ```
 
-### Run application
+---
+
+## 🧪 Installation & Running the Project
+
+### 1️⃣ Install Frontend Dependencies
+
+```bash
+npm install
+```
+
+### 2️⃣ Start Frontend
+
+```bash
+npm start
+```
+
+Frontend runs at:
 
 ```
+http://localhost:4200/
+```
+
+### 3️⃣ Start Backend
+
+```bash
 ./gradlew bootRun
 ```
 
-### Run tests
+Backend runs at:
 
 ```
+http://localhost:8080/
+```
+
+---
+
+## 🔑 Demo Credentials
+
+Admin:
+
+```
+username: admin
+password: admin
+```
+
+User:
+
+```
+username: User 1
+password: TestPassword1234
+```
+
+---
+
+## 🧪 Run Tests
+
+```bash
 ./gradlew test
 ```
+
+---
+
+## 📂 Project Structure
+
+* `backend/` – Spring Boot REST API
+* `frontend/` – Angular application
+* JWT-based authentication layer
+* Role-based authorization
+
+---
+
+## 👨‍💻 Team
+
+Backend:
+Riccardo Landolfo
+
+Frontend:
+Dobrawa Kiefer
+
+---
+
+# 🎯 What This Project Demonstrates
+
+* Secure REST API design
+* Stateless authentication with JWT
+* Role-based authorization
+* Clean separation between frontend and backend
+* Modern Java backend architecture
+* Responsive UI integration

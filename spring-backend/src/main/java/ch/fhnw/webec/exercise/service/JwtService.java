@@ -3,87 +3,89 @@ package ch.fhnw.webec.exercise.service;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
+import javax.crypto.SecretKey;
+import java.time.Clock;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtService {
 
-    public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
+    private final SecretKey signingKey;
+    private final Duration ttl;
+    private final String issuer;
+    private final String audience;
+    private final Clock clock;
+
+    public JwtService(
+            @Value("${security.jwt.secret-base64}") String secretBase64,
+            @Value("${security.jwt.ttl:PT168H}") Duration ttl,
+            @Value("${security.jwt.issuer:ticketing-system-demo}") String issuer,
+            @Value("${security.jwt.audience:ticketing-api}") String audience
+    ) {
+        this.signingKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretBase64));
+        this.ttl = ttl;
+        this.issuer = issuer;
+        this.audience = audience;
+        this.clock = Clock.systemUTC();
+    }
 
     public String generateToken(UserDetails userDetails) {
+        Instant now = Instant.now(clock);
+
         Map<String, Object> claims = new HashMap<>();
-        claims.put("authorities", userDetails.getAuthorities().stream()
-            .map(grantedAuthority -> grantedAuthority.getAuthority())
-            .toList());
-        // TODO: UNSAFE FOR PRODUCTION
-        claims.put("password", userDetails.getPassword());
+        claims.put("authorities", authorities(userDetails));
 
-        return createToken(claims, userDetails.getUsername());
-    }
-
-    private String createToken(Map<String, Object> claims, String userName) {
         return Jwts.builder()
-            .setClaims(claims)
-            .setSubject(userName)
-            .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
-            .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
-    }
-
-    private Key getSignKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
-        return Keys.hmacShaKeyFor(keyBytes);
+                .issuer(issuer)
+                .audience().add(audience).and()
+                .subject(userDetails.getUsername())
+                .issuedAt(Date.from(now))
+                .expiration(Date.from(now.plus(ttl)))
+                .id(UUID.randomUUID().toString())
+                .claims(claims)
+                .signWith(signingKey, Jwts.SIG.HS256)
+                .compact();
     }
 
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return parseClaims(token).getSubject();
     }
 
-    public Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
-    }
-
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
-    }
-
-    private Claims extractAllClaims(String token) {
+    public boolean validateToken(String token, UserDetails userDetails) {
         try {
-            return Jwts
-                .parser()
-                .setSigningKey(getSignKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-        } catch (ExpiredJwtException e) {
-            throw new RuntimeException("Token expired", e);
-        } catch (JwtException e) {
-            throw new RuntimeException("Invalid token", e);
-        }
-    }
+            Claims claims = parseClaims(token);
 
-    private Boolean isTokenExpired(String token) {
-        try {
-            return extractExpiration(token).before(new Date());
-        } catch (RuntimeException e) {
-            return true;
-        }
-    }
+            boolean subjectOk = Objects.equals(claims.getSubject(), userDetails.getUsername());
+            boolean notExpired = claims.getExpiration().after(Date.from(Instant.now(clock)));
+            boolean issuerOk = Objects.equals(claims.getIssuer(), issuer);
+            boolean audienceOk = claims.getAudience() == null || claims.getAudience().contains(audience);
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        try {
-            final String username = extractUsername(token);
-            return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-        } catch (RuntimeException e) {
+            return subjectOk && notExpired && issuerOk && audienceOk;
+        } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
+    }
+
+    private Claims parseClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(signingKey)
+                .requireIssuer(issuer)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    private static List<String> authorities(UserDetails userDetails) {
+        return userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
     }
 }
